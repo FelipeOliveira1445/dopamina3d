@@ -144,7 +144,7 @@ body.drawer-lock{overflow:hidden}
 @media(max-width:600px){.top-actions{gap:7px}}
 </style>
 
-<meta name="color-scheme" content="light dark"><script>(function(){try{var v=localStorage.getItem('dopamina3d-theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',v==='light'||v==='dark'?v:(d?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><link rel="stylesheet" href="theme-global.css"><meta name="referrer" content="no-referrer"><link rel="manifest" href="/manifest.webmanifest">
+<meta name="color-scheme" content="light dark"><script>(function(){try{var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><link rel="stylesheet" href="theme-global.css"><meta name="referrer" content="no-referrer"><link rel="manifest" href="/manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dopamina 3D"><link rel="apple-touch-icon" href="/assets/icon-192.png">
 
 <style>
@@ -154,6 +154,56 @@ body.drawer-lock{overflow:hidden}
 @media(max-width:700px){.audit-toolbar{grid-template-columns:1fr}.audit-modal{padding:15px}.audit-modal-meta{gap:8px;display:grid}.audit-diff th:first-child{width:120px}}
 /* Exportações de relatórios v8 */
 .export-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line)}.export-row:last-child{border-bottom:0}.export-row>div:first-child{display:grid;gap:4px}.export-row small{display:block;color:var(--mut);font-size:12px}.export-formats{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.export-formats .btn{min-width:54px;padding:8px 10px;font-size:11px}@media(max-width:700px){.export-row{align-items:flex-start;flex-direction:column}.export-formats{justify-content:flex-start;width:100%}.export-formats .btn{flex:1}}
+</style>
+
+
+
+<style id="portal-sidebar-theme-fix">
+/* Barra lateral acompanha o tema selecionado; identidade e destaque ativo preservados. */
+:root:not([data-theme="dark"]) .side {
+  background: #F4F1EA !important;
+  color: #14110F !important;
+  border-right: 1px solid rgba(20,17,15,.12) !important;
+}
+:root:not([data-theme="dark"]) .side .brand { color: #14110F !important; }
+:root:not([data-theme="dark"]) .side .who {
+  background: #FBF9F4 !important;
+  color: #625D55 !important;
+  border-color: rgba(20,17,15,.14) !important;
+}
+:root:not([data-theme="dark"]) .side .who strong,
+:root:not([data-theme="dark"]) .side .who b { color: #14110F !important; }
+:root:not([data-theme="dark"]) .side .who .pill {
+  background: rgba(198,244,50,.24) !important;
+  color: #42520D !important;
+}
+:root:not([data-theme="dark"]) .side .nav button {
+  color: #514C45 !important;
+}
+:root:not([data-theme="dark"]) .side .nav button:hover {
+  background: #EAE6DC !important;
+  color: #14110F !important;
+}
+:root:not([data-theme="dark"]) .side .nav button.active {
+  background: #C6F432 !important;
+  color: #14110F !important;
+}
+:root:not([data-theme="dark"]) .side .nav button .dot {
+  background: #777D73 !important;
+}
+:root:not([data-theme="dark"]) .side .nav button.active .dot {
+  background: #14110F !important;
+}
+:root:not([data-theme="dark"]) .side .side-foot a,
+:root:not([data-theme="dark"]) .side .side-foot button {
+  color: #514C45 !important;
+  border-color: rgba(20,17,15,.16) !important;
+}
+:root:not([data-theme="dark"]) .side .side-foot a:hover,
+:root:not([data-theme="dark"]) .side .side-foot button:hover {
+  background: #EAE6DC !important;
+  color: #14110F !important;
+}
 </style>
 
 </head>
@@ -207,7 +257,7 @@ body.drawer-lock{overflow:hidden}
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="portal-config.js"></script>
-<script src="contract-template.js"></script><script src="portal.js?v=20261112v20"></script>
+<script src="contract-template.js"></script><script src="portal.js?v=dopamina3d-v22"></script>
 
 <script src="theme-global.js"></script><script src="/pwa-install.js" defer></script>
 </body></html>

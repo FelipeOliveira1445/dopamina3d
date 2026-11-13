@@ -1,0 +1,21 @@
+DOPAMINA 3D — v22 | CORREÇÃO DO CAMPO DE DATA NO FINANCEIRO
+
+PROBLEMA
+Os filtros De/Até usavam input nativo type=date, cujo controle segmentado podia interromper a digitação do ano completo em alguns navegadores/dispositivos.
+
+CORREÇÃO
+- Filtros De e Até agora aceitam texto com teclado numérico.
+- Máscara automática DD/MM/AAAA; digitar 13112026 exibe 13/11/2026.
+- Validação de data real impede datas impossíveis.
+- Conversão para AAAA-MM-DD antes de filtrar, preservando a comparação com o banco.
+
+VERSIONAMENTO
+- Versão interna do portal: 2.2.
+- Pacote: dopamina3d-v22-correcao-data-financeiro.zip.
+- Cache-buster de portal.js atualizado para v22.
+
+ESCOPO
+Somente os filtros de período do Financeiro, formatação/validação e identificador de versão/cache. Sem alterações em banco, dados, permissões, autenticação, integrações ou demais funcionalidades.
+
+VALIDAÇÃO
+Validar no navegador digitando 13112026 nos campos De e Até; a máscara deve exibir 13/11/2026.
