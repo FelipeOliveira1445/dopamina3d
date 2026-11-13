@@ -1,0 +1,20 @@
+CORREÇÃO — FINANCEIRO E NAVEGAÇÃO MOBILE
+
+O que foi ajustado:
+1. A posição de rolagem de cada aba é guardada e restaurada ao alternar entre seções.
+2. Os rascunhos do formulário financeiro são preservados no sessionStorage.
+3. O arquivo selecionado no Financeiro é copiado para IndexedDB no próprio dispositivo,
+   permitindo recuperá-lo se o navegador/PWA reconstruir a página ao retornar do seletor.
+4. O comprovante recuperado continua aguardando o clique em “Salvar lançamento”.
+5. O aviso beforeunload foi removido para não interferir no retorno do seletor de arquivos.
+6. A verificação de atualização do Service Worker não é disparada ao voltar de outro app.
+
+Implantação:
+- Publicar o conteúdo completo do ZIP na raiz do site Netlify, substituindo os arquivos existentes.
+- Não requer SQL, alteração de RLS ou implantação de Edge Function.
+- Depois da publicação, fechar completamente o PWA/navegador e abrir novamente.
+- Testar primeiro no navegador do celular e depois no aplicativo instalado.
+
+Observação:
+O rascunho e o arquivo temporário ficam no armazenamento local do navegador/dispositivo.
+O comprovante só é enviado ao Supabase Storage quando o usuário clica em “Salvar lançamento”.

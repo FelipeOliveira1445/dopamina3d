@@ -1,0 +1,22 @@
+DOPAMINA 3D — CORREÇÃO DE SEGURANÇA DOS ANEXOS
+
+O que foi alterado:
+1. Contratos e comprovantes deixam de abrir navegando diretamente para a URL assinada do Supabase.
+2. O portal gera uma URL assinada com validade de 60 segundos, busca o arquivo e abre o conteúdo por uma URL blob: local do navegador.
+3. A nova aba é aberta imediatamente no clique para evitar bloqueadores de pop-up.
+4. A abertura usa cache: no-store, credentials: omit e referrerPolicy: no-referrer.
+5. As páginas HTML receberam meta referrer=no-referrer.
+6. O JavaScript duplicado portal (2).js também foi alinhado para não manter o antigo comportamento.
+
+Limites importantes:
+- O endereço do projeto Supabase e a chave publishable/anon são identificadores/credenciais públicas de cliente; não são a service_role.
+- A URL assinada continua sendo utilizada temporariamente na requisição de rede e pode ser vista por alguém com acesso às ferramentas de desenvolvedor enquanto válida. Ela não é colocada na barra de endereço do documento aberto e expira em 60 segundos.
+- Nenhuma solução executada inteiramente no navegador consegue esconder completamente um URL/token usado pelo próprio navegador. Para ocultação também da aba Network/DevTools, seria necessário um proxy autenticado no servidor/Edge Function que transmita o arquivo sem entregar URL assinada ao cliente.
+- Não foram alteradas as políticas RLS, funções Edge, tabelas ou permissões do Supabase.
+- Os buckets finance-files e contracts já estão definidos como privados no schema.sql deste projeto. Confirme no Dashboard do Supabase > Storage que ambos continuam com Public desativado.
+- Não publique service_role em HTML, JavaScript, Netlify ou variáveis expostas ao navegador.
+
+Validações realizadas:
+- portal.js passou na verificação de sintaxe JavaScript.
+- O código ativo deixou de passar a URL assinada diretamente para window.open().
+- A chave presente em portal-config.js é sb_publishable_... e não service_role.

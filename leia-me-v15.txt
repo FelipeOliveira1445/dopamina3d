@@ -1,0 +1,23 @@
+DOPAMINA 3D — AJUSTES CONTRATOS E COMPROVANTES v15
+
+BASE: v14. A v12 continua descartada.
+
+ALTERAÇÕES:
+- Contratos: tag Ativo em verde-limão; Encerrado em tom neutro.
+- Informação de assinatura separada do estado do contrato.
+- "Assinado digitalmente" só aparece quando digital_signature_status = verified.
+- Demais documentos mostram "Não assinado digitalmente".
+- A data exibida é a data de criação do registro, não signed_at.
+- Upload/anexo de contrato não marca mais automaticamente o documento como assinado.
+- Botões de visualização de comprovantes agora exibem ícone + "Abrir".
+- Botões de abrir, ações dos contratos e ações de expedição padronizados em altura e escala.
+
+IMPORTANTE SOBRE A VERIFICAÇÃO:
+Este pacote prepara o campo de estado da verificação, mas não implementa validação criptográfica do PDF.
+O status verified só pode ser atribuído após integrar um verificador de assinatura digital confiável (ou serviço de assinatura/verificação).
+Não se considera uma imagem de assinatura, texto impresso ou signed_at como assinatura digital válida.
+
+ANTES DO DEPLOY:
+1. Execute migration-assinatura-digital-contratos-v15.sql no Supabase.
+2. Publique a pasta inteira na Netlify.
+3. Ctrl+F5 para limpar cache.

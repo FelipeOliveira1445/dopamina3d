@@ -1,0 +1,29 @@
+DOPAMINA 3D — PACOTE DE MELHORIAS DE INTERFACE v6
+Base: Dopamina3D_Melhorias_Remessas_Integradas_v5
+
+ALTERAÇÕES INCLUÍDAS
+1. Pedidos / comprovantes (visão de administrador e colaborador)
+   - O botão “Ver comprovante” passa a exibir “Comprovante” com ícone de abertura.
+   - A ação usa o visualizador privado já existente no portal: o arquivo é obtido por URL assinada internamente e exibido por URL Blob local, evitando deixar a URL do Supabase na barra de endereço.
+   - Na listagem financeira, a ação “Abrir” também passa a se chamar “Comprovante”, mantendo o ícone.
+   - Bucket permanece privado; nenhuma política ou permissão de Storage foi ampliada.
+
+2. Aba Contratos
+   - “Gerar contrato” passa a usar o botão verde principal.
+   - “Anexar contrato” passa a usar o estilo secundário/contornado.
+
+3. Aba Financeiro
+   - Ao clicar em “Novo lançamento”, o formulário é exibido e a página rola suavemente até o card, centralizando-o na área visível.
+   - O comportamento segue a experiência de enquadramento já usada em “Editar lançamento”.
+
+PUBLICAÇÃO
+- Faça backup da versão atual antes de publicar.
+- Extraia o ZIP e publique o conteúdo da pasta dopamina3d-portal-mobile-drawer-v4 na raiz do site Netlify.
+- Preserve portal-config.js e as configurações específicas do projeto, caso existam.
+- Não há migração SQL nesta atualização.
+- Após publicar, faça Ctrl+F5 e valide os três pontos acima.
+
+VALIDAÇÃO TÉCNICA
+- portal.js verificado com node --check.
+- Nenhuma alteração foi feita no schema do Supabase, nas políticas RLS ou nos buckets.
+- A visualização do comprovante depende das permissões privadas já existentes no bucket order-payments e finance-files.

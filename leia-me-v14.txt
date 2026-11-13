@@ -1,0 +1,28 @@
+DOPAMINA 3D — ACERTO DETALHADO DE REMESSAS v14
+
+Base: v13 (que por sua vez preserva os assets recuperados da v11). A v12 foi descartada.
+
+NOVO FLUXO:
+- Remessas novas salvam composição item a item em shipment_items.
+- Cada linha guarda produto, quantidade e preço de atacado/repasse no momento da remessa.
+- Botão da expedição: "Acertar", verde-limão.
+- Ao responder SIM para peças não vendidas, abre lista dinâmica de devoluções.
+- Produto de catálogo: preço unitário é recuperado do preço congelado na remessa.
+- Fora do catálogo: descrição e preço unitário são informados manualmente.
+- Quantidade devolvida não pode exceder quantidade enviada para produto do catálogo.
+- Resumo condicional: quantidade/valor enviado, quantidade/valor devolvido e valor vendido/a receber.
+- O valor líquido vendido é lançado como receita na data do acerto.
+- Detalhes das devoluções ficam registrados em shipment_return_items.
+- Novas tabelas recebem triggers de auditoria usando capture_audit_log().
+- Compatibilidade para remessas antigas: tenta reconstruir composição a partir de descrições no formato "10× Produto; 2× Produto". Se não conseguir, o portal avisa e não inventa valores.
+
+ANTES DO DEPLOY:
+1. Execute migration-acerto-consignacao-detalhado-v14.sql no Supabase SQL Editor.
+2. Publique a pasta dopamina3d-portal-mobile-drawer-v4 inteira na Netlify.
+3. Mantenha assets, portal-config.js e demais arquivos.
+4. Atualize com Ctrl+F5.
+
+NOTAS:
+- A migração adiciona tabelas e políticas RLS para os itens de remessa/devolução.
+- Não altera a Edge Function product-admin nem as políticas financeiras existentes.
+- O lançamento financeiro continua sujeito à política de administrador.

@@ -1,0 +1,37 @@
+DOPAMINA 3D — AUDITORIA ADMINISTRATIVA
+
+ARQUIVOS
+- portal.html / portal.js: nova aba Auditoria, exclusiva para administrador.
+- migration-auditoria-administrador.sql: tabela, RLS, índices, função e gatilhos de auditoria.
+
+PUBLICAÇÃO
+1. Faça backup dos arquivos atuais e do banco.
+2. No Supabase SQL Editor, execute uma única vez o arquivo migration-auditoria-administrador.sql.
+3. Publique o conteúdo da pasta dopamina3d-portal-mobile-drawer-v4 no diretório raiz do Netlify.
+4. Preserve portal-config.js e demais configurações específicas do projeto.
+5. Faça hard refresh (Ctrl+F5) e entre com perfil administrador.
+
+O QUE É REGISTRADO
+- INSERT, UPDATE e DELETE nas tabelas públicas existentes que possuem coluna id no momento da migração.
+- Data/hora, usuário autenticado, perfil, tabela, identificador do registro, operação, campos modificados e snapshots JSON antes/depois.
+- Alterações sem diferença real entre os valores não geram evento.
+
+ACESSO E SEGURANÇA
+- A aba Auditoria é incluída somente no menu admin.
+- A tabela audit_logs tem RLS e política de leitura exclusiva para public.is_admin().
+- Não há permissões diretas de INSERT/UPDATE/DELETE para usuários autenticados.
+- A gravação é feita pelo gatilho SECURITY DEFINER.
+- Não torne audit_logs pública e não remova as políticas.
+- Colaboradores e revendedores não recebem acesso à consulta dos registros.
+
+DETALHES
+- A tela apresenta os 500 eventos mais recentes, com filtros por texto, operação e data.
+- O botão circular "i" abre a comparação campo a campo: Antes e Depois.
+- Os dados históricos anteriores à instalação dos gatilhos não são reconstruídos retroativamente.
+- Tabelas públicas novas criadas futuramente não são automaticamente cobertas; para incluí-las, execute novamente somente o bloco DO de instalação dos gatilhos, após revisar a tabela.
+- A auditoria registra valores completos de linhas alteradas. Restrinja o acesso administrativo e observe a política de retenção e privacidade da empresa.
+
+VALIDAÇÃO
+- JavaScript validado com node --check.
+- ZIP validado quanto à integridade.
+- A integração real depende da execução da migração no Supabase e de teste autenticado no ambiente do projeto.

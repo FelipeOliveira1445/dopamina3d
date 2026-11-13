@@ -1,0 +1,37 @@
+DOPAMINA 3D — ATUALIZAÇÃO GERAL
+
+O QUE FOI PREPARADO
+1. Portal: duas páginas independentes: criar-senha.html (convite/primeiro acesso) e redefinir-senha.html (esqueci minha senha). A página antiga definir-senha.html redireciona para criar-senha.html para compatibilidade.
+2. Portal: validação de conta ativa ao iniciar sessão.
+3. Portal: custos/margens consultados em tabela interna separada, em vez de permanecerem na tabela pública de produtos.
+4. Migração SQL: tabela interna de custos, controle is_active, funções de autorização revisadas.
+5. Edge Function admin-users: convite de usuário, mudança de papel (sem permitir admin pelo painel) e bloqueio/desbloqueio pelo administrador.
+6. Landing/catalog: metadados SEO e compartilhamento social, mantendo o conteúdo visual e os arquivos originais.
+7. Netlify: cabeçalhos básicos de segurança.
+8. Preservados index/catalogo, vídeos, imagens, favicon e portal-config.js de exemplo.
+
+ANTES DE PUBLICAR — OBRIGATÓRIO
+A) Faça backup da pasta atualmente publicada.
+B) No SQL Editor do Supabase, execute migration-seguranca-completa.sql. Faça backup antes.
+C) Execute também migration-primeiro-acesso.sql no SQL Editor. Ela adiciona profiles.must_set_password, usado para exigir a criação de senha no primeiro acesso.
+D) Implante a Edge Function supabase/functions/admin-users/index.ts e configure os secrets SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY e DOPAMINA_APP_URL. Configure DOPAMINA_APP_URL com a URL pública de criar-senha.html (ex.: https://dopamina3d.netlify.app/criar-senha.html). A SUPABASE_SERVICE_ROLE_KEY deve existir apenas como secret da Edge Function. Nunca a copie para portal-config.js.
+E) Configure SMTP de produção em Supabase Auth > SMTP Settings. Em Authentication > URL Configuration, inclua as URLs completas de criar-senha.html e redefinir-senha.html na lista de Redirect URLs, além da Site URL do site.
+F) No Supabase Auth, desative signups públicos se a operação for somente por convite. A criação de usuários deve ser feita pela Edge Function admin-users.
+G) Publique criar-senha.html, redefinir-senha.html, definir-senha.html (compatibilidade) e auth-flow.js. Substitua portal.html e portal.js pelos arquivos deste pacote. Preserve seu portal-config.js já configurado (não substitua pelo arquivo de exemplo).
+H) Substitua index.html apenas se esta for a versão pública atual correspondente. O arquivo incluído é baseado no pacote portal-entrega e mantém catálogo e mídia.
+I) Publique a pasta completa no Netlify, incluindo netlify.toml.
+
+IMPORTANTE / LIMITAÇÕES
+- O painel de usuários chama a Edge Function admin-users para convite, alteração de perfil e bloqueio. O primeiro acesso exige a migration-primeiro-acesso.sql e o secret DOPAMINA_APP_URL apontando para criar-senha.html. A redefinição de senha usa redefinir-senha.html.
+- Não há implantação automática: você precisa publicar no Netlify e executar a migração.
+- O catálogo público atual foi preservado. A política de leitura pública de produtos deve ser revisada: com a remoção de cost_price da tabela products, o custo deixa de ser retornado pela tabela de catálogo.
+- Estoque continua na tabela products; não é descontado automaticamente ao criar pedidos.
+- O arquivo netlify.toml aplica cabeçalhos básicos, não substitui CSP testada.
+- Faça testes com contas separadas de administrador, colaborador e revendedor antes de convidar clientes.
+- Confirme no Supabase Storage que contracts e finance-files continuam privados e que suas políticas de acesso estão restritas.
+
+
+TEMA CLARO/NOTURNO:
+- O portal segue a preferência de aparência do sistema operacional na primeira visita.
+- O botão de sol/lua no canto superior direito permite alternar manualmente.
+- A escolha manual fica salva no navegador e prevalece nas próximas visitas.

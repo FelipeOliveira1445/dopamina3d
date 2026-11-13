@@ -1,0 +1,20 @@
+DOPAMINA 3D — STATUS ATIVAR/DESATIVAR PRODUTOS
+
+ALTERAÇÃO
+- O botão Excluir na tabela Produtos e Estoque foi substituído por Ativar/Desativar, ao lado de Editar.
+- O formulário de edição não tem mais a caixa "Produto ativo no catálogo".
+- O estado ativo/inativo é controlado somente pelo botão da linha.
+- A confirmação explica que desativar remove o produto do catálogo sem apagar o cadastro, estoque ou histórico.
+- Salvar uma edição de produto preserva o estado atual, evitando reativação/desativação acidental.
+- O filtro de produtos ativos/inativos continua funcionando.
+
+PUBLICAÇÃO
+1. Publique os arquivos do pacote no Netlify.
+2. Publique a Edge Function atualizada:
+   supabase functions deploy product-admin
+3. Não é necessária migração SQL adicional.
+
+SEGURANÇA
+- A ação set_product_active valida usuário autenticado, origem autorizada e perfil ativo de admin/colaborador, usando a autenticação e verificação de perfil já existentes na Edge Function.
+- Não foram alteradas políticas RLS, permissões diretas nem chaves.
+- A exclusão de produtos continua existindo somente no backend, caso seja necessária uma manutenção administrativa futura; não há botão de exclusão na interface Produtos e Estoque.

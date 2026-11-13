@@ -1,0 +1,46 @@
+DOPAMINA 3D — VERSÃO 10
+Auditoria ampla + cadastro de categorias + rolagem suave + vitrine pública integrada
+
+O QUE ESTA VERSÃO INCLUI
+1. Mantém as melhorias consolidadas da v9: auditoria ampliada, categoria com sugestões e texto livre e rolagem suave no botão Novo produto.
+2. Integra o catálogo público da página inicial diretamente ao cadastro de Produtos e Estoque.
+3. Produtos novos são criados com Exibir na página inicial ativado por padrão. Produtos inativos não aparecem.
+4. É possível retirar um produto individualmente da vitrine sem desativá-lo no estoque. A configuração show_on_homepage é preservada quando o produto é ativado/desativado.
+5. Cada produto pode ter imagem principal JPG/PNG/WebP/GIF, descrição, informações adicionais públicas, cores, categoria, preço, destaque e ordem de exibição.
+6. A página inicial consulta a view public.public_catalog_products. A view expõe apenas campos comerciais públicos; não expõe custo, margem, preço de atacado, estoque ou outros dados internos.
+7. O painel mostra o estado da vitrine e oferece um botão para publicar/ocultar individualmente sem abrir o editor.
+8. Alterações de produtos passam pela Edge Function product-admin, preservando o fluxo administrativo existente.
+9. A assinatura digital por API NÃO foi incluída. O fluxo atual de contratos foi preservado.
+
+MIGRAÇÕES SUPABASE — EXECUTAR ANTES DA PUBLICAÇÃO
+1. Execute migration-vitrine-publica.sql para adicionar os campos da vitrine e criar a view pública limitada.
+2. Execute migration-auditoria-completa.sql para instalar/atualizar os gatilhos de auditoria em todas as tabelas-base existentes do schema public, exceto audit_logs.
+3. Não conceda SELECT público diretamente na tabela products. A página inicial lê exclusivamente public_catalog_products.
+
+EDGE FUNCTION
+Implante a versão atualizada de supabase/functions/product-admin/index.ts como Edge Function product-admin. Ela precisa aceitar save_product com os novos campos e a ação set_catalog_visibility.
+Mantenha SUPABASE_SERVICE_ROLE_KEY somente nos secrets da Edge Function; nunca a coloque no frontend.
+
+NETLIFY
+1. Faça backup da versão publicada.
+2. Publique o conteúdo da pasta dopamina3d-portal-mobile-drawer-v4 na raiz do site.
+3. Preserve portal-config.js com a URL e a chave anon/publishable do seu projeto.
+4. Faça Ctrl+F5 no navegador após a publicação.
+
+TESTES DE ACEITAÇÃO
+- Criar produto ativo novo com GIF, descrição, categoria, informações adicionais e preço: deve aparecer na página inicial.
+- Retirar apenas da vitrine: deve desaparecer do catálogo, mas continuar ativo no estoque e nos pedidos internos.
+- Reativar a exposição: deve voltar ao catálogo.
+- Desativar o produto: deve desaparecer mesmo que show_on_homepage continue true.
+- Reativar o produto: deve voltar a aparecer se não tiver sido retirado manualmente da vitrine.
+- Alterar preço, imagem, categoria ou informações adicionais: o catálogo deve refletir a atualização ao recarregar/retornar à página; a assinatura realtime pode atualizar sem recarga quando disponível.
+- Alterar ordem de exibição e destaque: verificar a ordenação e o selo de destaque.
+- Confirmar anon consegue consultar somente a view e não a tabela products.
+- Verificar a auditoria para alterações em produtos, configurações da vitrine e demais módulos.
+- Testar em desktop e celular.
+
+NOTAS
+- A view pública expõe nome, descrição, detalhes de catálogo, preço de varejo, cores, imagem, categoria, ordem e destaque dos produtos ativos e publicados.
+- O GIF é mantido como mídia principal quando enviado como image/gif; não há galeria de múltiplas imagens nesta entrega.
+- Se a consulta pública falhar, o catálogo preserva a última versão estática carregada e registra o erro no console; valide a view e a migração no Supabase.
+- Os registros de auditoria anteriores à instalação dos gatilhos não são reconstruídos.

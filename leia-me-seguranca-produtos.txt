@@ -1,0 +1,30 @@
+DOPAMINA 3D — OPERAÇÕES ADMINISTRATIVAS DE PRODUTOS
+
+O QUE FOI ALTERADO
+- A interface do portal permanece igual.
+- Atualização de estoque, cadastro e edição de produtos agora chamam a Edge Function product-admin.
+- A função valida o JWT, consulta o perfil no banco e exige conta ativa com papel admin ou collaborator.
+- O custo interno continua podendo ser alterado somente por admin.
+- A chave service_role é lida exclusivamente dos secrets da Edge Function; não foi adicionada ao frontend.
+- Não foi criada função de exclusão, pois o portal atual não oferece esse fluxo.
+
+PUBLICAÇÃO
+1. Extraia o ZIP.
+2. Na pasta dopamina3d-portal, abra o terminal.
+3. Publique a função:
+   npx supabase functions deploy product-admin
+4. Confirme que os secrets existentes no projeto Supabase continuam configurados:
+   SUPABASE_URL
+   SUPABASE_ANON_KEY
+   SUPABASE_SERVICE_ROLE_KEY
+   DOPAMINA_APP_URL
+   (DOPAMINA_ALLOWED_ORIGINS é opcional; se configurado, inclua https://dopamina3d.netlify.app)
+5. Publique o conteúdo da pasta dopamina3d-portal no Netlify, mantendo a estrutura de diretórios.
+
+IMPORTANTE
+- Não execute novamente GRANT de INSERT/UPDATE/DELETE para authenticated na tabela products.
+- Não coloque SUPABASE_SERVICE_ROLE_KEY em portal-config.js, portal.js ou qualquer arquivo público.
+- Depois da publicação, teste com uma conta admin: atualizar estoque, editar produto existente e cadastrar um produto de teste.
+- Teste também com uma conta collaborator: atualizar estoque, editar e cadastrar produto. A coluna custo interno deve permanecer restrita ao admin.
+- Teste com revendedor: não deve aparecer o menu de catálogo e chamadas diretas à função devem retornar 403.
+- Se o portal ainda estiver aberto em outra aba, recarregue com Ctrl+F5 após a publicação.

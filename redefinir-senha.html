@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#14110f">
+<title>Redefinir senha | Dopamina 3D</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--fg:#14110f;--mut:#716b63;--card:#fffdf8;--line:rgba(20,17,15,.12);--lime:#c6f432;--pink:#ff3d8b;--red:#bd3434;--green:#16834a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:Poppins,Arial,sans-serif;display:grid;place-items:center;padding:22px}.card{width:min(480px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 18px 60px #14110f12}.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:23px;letter-spacing:-1px}.brand span{background:var(--lime);padding:1px 7px;border-radius:5px}.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-top:24px}.mark{width:38px;height:38px;border:5px solid var(--fg);border-right-color:transparent;border-bottom-color:var(--fg);position:relative}.mark:after{content:"";position:absolute;width:9px;height:9px;background:var(--pink);right:-7px;top:2px}h1{font-size:26px;line-height:1.2;margin:9px 0 10px}p{font-size:13px;line-height:1.7;color:var(--mut)}.field{display:grid;gap:7px;margin:16px 0}.field label{font-size:12px;color:var(--mut)}input{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:13px;color:var(--fg);font:inherit;font-size:14px}input:focus{outline:3px solid #ff3d8b55;border-color:var(--pink)}.btn{width:100%;border:0;background:var(--lime);color:var(--fg);border-radius:999px;padding:14px 18px;font:600 13px Poppins,Arial,sans-serif;cursor:pointer;margin-top:8px}.btn:disabled{opacity:.55;cursor:wait}.message{font-size:12px;line-height:1.6;margin-top:14px;min-height:18px}.message.error{color:var(--red)}.message.success{color:var(--green)}.hint{background:#f4f1ea;border-radius:12px;padding:12px 14px;margin:18px 0;font-size:11px;line-height:1.7;color:var(--mut)}.footer{border-top:1px solid var(--line);margin-top:24px;padding-top:16px;font-size:10px;color:var(--mut);text-align:center}.hidden{display:none!important}.link{display:inline-block;color:var(--fg);font-size:12px;text-decoration:underline;margin-top:12px}@media(max-width:480px){.card{padding:25px 20px}h1{font-size:23px}}
+</style>
+<meta name="color-scheme" content="light dark"><script>(function(){try{var v=localStorage.getItem('dopamina3d-theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',v==='light'||v==='dark'?v:(d?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><link rel="stylesheet" href="theme-global.css"><meta name="referrer" content="no-referrer"><link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dopamina 3D"><link rel="apple-touch-icon" href="/assets/icon-192.png">
+</head>
+<body data-auth-mode="recovery"><button type="button" class="theme-toggle-global" data-theme-toggle aria-label="Alternar tema" title="Alternar tema" aria-pressed="false"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2Z"></path></svg></button>
+<main class="card">
+ <div class="brand"><span class="mark" aria-hidden="true"></span><span>dopamina<span>3d</span></span></div>
+ <div class="eyebrow" id="eyebrow">Área exclusiva · Redefinição de senha</div>
+ <section id="loading">
+  <h1>Validando link de redefinição...</h1>
+  <p>Estamos validando seu link seguro para atualizar a senha da sua conta Dopamina 3D.</p>
+ </section>
+ <section id="setup" class="hidden">
+  <h1 id="pageTitle">Redefina sua senha</h1>
+  <p id="pageIntro">Escolha uma nova senha para voltar a acessar seus pedidos, contratos e remessas.</p>
+  <div class="hint">Use pelo menos <b>10 caracteres</b>. Recomendamos combinar letras maiúsculas, minúsculas, números e símbolos.</div>
+  <form id="passwordForm">
+   <div class="field"><label for="password">Nova senha</label><input id="password" type="password" minlength="10" autocomplete="new-password" required placeholder="Crie uma senha segura"></div>
+   <div class="field"><label for="confirmation">Confirme sua senha</label><input id="confirmation" type="password" minlength="10" autocomplete="new-password" required placeholder="Digite a senha novamente"></div>
+   <button class="btn" id="submitButton" type="submit">Salvar nova senha</button>
+  </form>
+ </section>
+ <section id="done" class="hidden">
+  <h1 id="doneTitle">Senha redefinida!</h1>
+  <p id="doneText">Sua senha foi atualizada. Agora você já pode entrar novamente no portal.</p>
+  <button class="btn" id="goPortal" type="button">Entrar no portal</button>
+ </section>
+ <section id="problem" class="hidden">
+  <h1 id="problemTitle">Não foi possível validar a redefinição</h1>
+  <p id="problemText">O link de redefinição pode ter expirado ou já ter sido utilizado.</p>
+  <a class="link" href="portal.html">Voltar para a página de acesso</a>
+ </section>
+ <p id="message" class="message" role="status" aria-live="polite"></p>
+ <div class="footer">Dopamina 3D · Uma dose por camada, um vício por peça.</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="portal-config.js"></script>
+<script src="auth-flow.js"></script>
+<script src="theme-global.js"></script><script src="/pwa-install.js" defer></script>
+</body>
+</html>

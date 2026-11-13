@@ -1,0 +1,26 @@
+DOPAMINA 3D — ATUALIZAÇÃO DE PRODUTOS, CONTRATOS E EXPEDIÇÃO
+
+O QUE MUDOU
+1. Produtos e estoque: botão pequeno de excluir ao lado de Editar. A exclusão usa o modal de confirmação com checkbox. A Edge Function verifica se o produto aparece em pedidos antigos; se aparecer, bloqueia a exclusão para preservar o histórico e recomenda desativar o produto. Se não houver uso histórico, remove o registro, os dados internos e a imagem própria do bucket product-images quando aplicável.
+2. Contratos: botão Abrir Contrato abre o PDF pelo visualizador seguro já usado no Financeiro. Contratos têm filtros Todos, Ativos e Encerrados. Administradores podem encerrar contratos; o documento continua armazenado e o registro passa ao status terminated. A ação usa confirmação específica “Encerrar contrato?”.
+3. Cliente e Equipe: o botão Desativar acesso permanece compacto, com estilo secundário de ação e sem competir visualmente com as ações principais.
+4. Expedição: o formulário Nova remessa tem botão Cancelar. A listagem possui filtros Todas, Em produção, Enviadas e Entregues. “Em produção” é a apresentação amigável do status interno existente preparing, sem alterar os status históricos.
+5. Tipo de remessa: ao criar, é possível marcar Compra ou Consignação. Quando uma remessa de consignação chega ao status Entregue, administradores podem Fazer acerto, informar o valor recebido e registrar uma receita em Financeiro com categoria “Acerto de consignação”. A remessa fica marcada com valor e data do acerto para evitar duplicidade.
+
+PASSOS OBRIGATÓRIOS ANTES DE PUBLICAR
+1. Faça backup do site e do banco.
+2. Supabase > SQL Editor: execute migration-shipments-consignment-settlement.sql uma única vez.
+3. Publique a Edge Function atualizada product-admin no projeto Supabase:
+   supabase functions deploy product-admin
+   A função usa SUPABASE_SERVICE_ROLE_KEY apenas no servidor. Não copie essa chave para arquivos do site.
+4. Publique o conteúdo deste pacote no Netlify, preservando as configurações existentes, portal-config.js, assets e estrutura de pastas.
+5. Teste com administrador: excluir produto sem pedidos históricos; tente excluir produto já usado em pedido (deve ser bloqueado); abrir/encerrar contrato; criar remessa de consignação; avançar para Enviada e Entregue; registrar acerto; conferir a receita no Financeiro.
+6. Teste com colaborador e revendedor para confirmar que não aparecem ações administrativas de acerto/encerramento.
+
+SEGURANÇA E INTEGRIDADE
+- Nenhuma política RLS foi ampliada nesta atualização.
+- Exclusão de produto passa pela Edge Function product-admin, que valida sessão e papel no servidor.
+- Produtos que tenham sido usados em order_items não podem ser apagados; isso preserva o histórico de pedidos e evita quebra de referências.
+- Encerrar contrato é uma mudança de status, não exclusão do arquivo ou do registro.
+- Acerto só aparece para administrador. O valor informado é lançado como receita no financeiro e gravado também na remessa. Se a atualização da remessa falhar, o lançamento financeiro recém-criado é removido para evitar duplicidade/inconsistência.
+- Não foi possível testar contra o Supabase/Netlify de produção neste ambiente. Execute os testes acima após implantar.

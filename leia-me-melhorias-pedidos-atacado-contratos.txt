@@ -1,0 +1,33 @@
+DOPAMINA 3D — MELHORIAS DE PEDIDOS, ATACADO, DASHBOARD E CONTRATOS
+
+BASE
+Esta atualização parte do pacote Dopamina3D_Pedidos_Contratos_v3.zip enviado em 10/11/2026.
+
+ALTERAÇÕES NO PORTAL
+1. A aba Pedidos soma os pedidos avulsos aos indicadores de total, aguardando análise, em produção e concluídos.
+2. Revendedores podem editar seus próprios pedidos enquanto estiverem em Aguardando análise ou Aprovado. A edição é bloqueada ao entrar em produção.
+3. Os preços mostrados aos revendedores em Pedir peças são os preços de atacado.
+4. Compra de peças exige pelo menos 30 unidades totais e pelo menos 10 unidades por modelo. Consignação não recebe esse mínimo.
+5. Produtos e estoque exibe a coluna Atacado para administradores e colaboradores e permite preencher o valor no formulário de produto.
+6. Os preços de atacado dos pedidos são aplicados e validados no banco, não apenas no navegador.
+7. Os ícones de Acesso rápido foram trocados por SVGs vetoriais para não depender de caracteres especiais/fontes do dispositivo.
+8. Contratos recebeu cabeçalho com ações agrupadas à direita, hierarquia visual, status em etiquetas e lista responsiva.
+
+PASSOS OBRIGATÓRIOS DE IMPLANTAÇÃO
+1. Supabase > SQL Editor: executar migration-atacado-pedidos-revendedor.sql.
+   Executar depois de migration-edicao-pedidos.sql (a função charm_round já deve existir).
+2. Atualizar a Edge Function product-admin com o arquivo:
+   supabase/functions/product-admin/index.ts
+   A função agora valida e salva wholesale_price. Faça o deploy da função após substituir o código.
+3. Netlify: publicar o conteúdo completo desta pasta na raiz do site.
+4. Em Produtos e estoque, revisar os valores da coluna Atacado. Os produtos existentes recebem inicialmente o mesmo preço de varejo como valor de atacado, para evitar preços nulos ou zerados. Ajuste os valores comerciais desejados.
+
+SEGURANÇA
+- A função de criação de pedidos valida a conta autenticada, os produtos ativos, as quantidades mínimas e calcula o total usando wholesale_price no banco.
+- A função edit_order permite que equipe edite pedidos e que o revendedor edite somente o próprio pedido, antes de iniciar a produção.
+- O navegador não é fonte confiável para definir o preço de atacado.
+- Nenhuma política RLS é afrouxada nesta atualização.
+- Não é necessário publicar service_role ou alterar segredos no frontend.
+
+VALIDAÇÃO
+A sintaxe do portal.js foi validada com node --check. A migração SQL e a Edge Function devem ser implantadas no Supabase antes de testar os novos fluxos. O teste funcional final deve ser feito no ambiente publicado com contas de administrador, colaborador e revendedor.

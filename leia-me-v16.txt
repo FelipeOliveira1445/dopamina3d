@@ -1,0 +1,15 @@
+DOPAMINA 3D — AJUSTE DAS DATAS DOS CONTRATOS v16
+
+BASE: v15. Preserva as alteracoes anteriores.
+
+REGRA:
+- Se digital_signature_status = 'verified': "Assinado em" + signed_at. Se signed_at estiver vazio, usa digital_signature_checked_at.
+- Nos demais estados: "Criado em" + updated_at; se indisponivel, created_at.
+- A formatacao aceita datas YYYY-MM-DD e timestamps ISO, evitando "Invalid Date".
+
+BANCO:
+1. Execute migration-data-contratos-v16.sql no Supabase SQL Editor.
+2. Publique a pasta completa na Netlify.
+3. Atualize com Ctrl+F5.
+
+A migracao adiciona updated_at e trigger para atualizar automaticamente a data quando o registro do contrato for alterado.

@@ -1,0 +1,20 @@
+ATUALIZAÇÃO v18 — CENTRAL DE PRODUÇÃO
+
+Foi adicionada a opção “← Retroceder” nos cartões da Central de Produção.
+
+Fluxo de retrocesso:
+- Aprovados → Aguardando análise
+- Em produção → Aprovados
+- Prontos / enviados → Em produção
+- Concluídos → Prontos / enviados
+
+A etapa “Aguardando análise” não exibe retrocesso. Pedidos cancelados permanecem sem ações de etapa.
+
+O retrocesso pede confirmação antes de salvar. A atualização é aplicada tanto aos pedidos normais quanto aos pedidos avulsos, respeitando a tabela de origem.
+
+PUBLICAÇÃO
+1. Extraia o ZIP.
+2. Publique no Netlify a pasta completa “dopamina3d-portal-mobile-drawer-v4”.
+3. No navegador, atualize com Ctrl+F5 (ou limpe o cache no celular).
+
+Esta versão parte do pacote v17 e mantém as alterações anteriores.

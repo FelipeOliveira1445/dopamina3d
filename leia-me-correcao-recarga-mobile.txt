@@ -1,0 +1,44 @@
+DOPAMINA 3D — CORREÇÃO: TELA RECARREGA AO VOLTAR DO SELETOR DE ARQUIVOS / DE OUTRA ABA
+
+CAUSA REAL
+Ao voltar do seletor de arquivos (ou de outro app/aba), o Supabase reemite o evento de login
+(SIGNED_IN / TOKEN_REFRESHED). O portal tratava esse evento como um novo login e chamava showApp(),
+que recarregava a aba do zero (loadTab com force). Resultado: formulário perdido e topo da página.
+Além disso, o aviso "Carregando..." encolhia a página, o navegador zerava a rolagem e esse zero
+sobrescrevia a posição salva antes de ela ser restaurada.
+
+O QUE MUDOU (portal.js)
+1. Se o portal já está aberto para o mesmo usuário e papel, a revalidação de sessão só atualiza o perfil.
+   Não reconstrói a tela. Formulário, anexo selecionado e rolagem ficam como estavam.
+2. Se a revalidação falhar em segundo plano (sem sinal ao voltar do app), a tela é mantida em vez de
+   mandar o usuário para o login.
+3. Durante o carregamento de uma aba, a rolagem salva fica protegida contra o "zero" forçado.
+4. Rascunhos do Financeiro (sessionStorage) e arquivo em IndexedDB continuam como rede de segurança
+   caso o celular encerre a página por falta de memória.
+5. portal.js passou a ter versão na URL (?v=) e cabeçalho no-cache no netlify.toml, para o celular
+   não usar a versão antiga.
+
+PUBLICAR
+- Publique o conteúdo do ZIP no Netlify, preservando portal-config.js. Sem SQL e sem Edge Function.
+- No celular: feche o app/aba por completo e abra de novo. No PWA instalado, feche e reabra uma vez.
+
+TESTAR
+1. Financeiro > Editar > Escolher arquivo > selecionar. A tela deve continuar igual, com o nome do arquivo.
+2. Salvar lançamento: o anexo deve subir.
+3. Financeiro, rolar até a metade, ir para outro app ou aba e voltar: mesma posição.
+4. Alternar entre abas do portal: rolagem de cada aba preservada.
+
+LIMITE
+Se o celular encerrar a página por falta de memória, o navegador não permite restaurar o arquivo
+escolhido sozinho. O rascunho e a cópia em IndexedDB tentam recuperar; se não der, escolha o arquivo de novo.
+
+ATUALIZAÇÃO (build 2026-11-06c)
+- Corrigido um erro interno: a variável "session" escondia a função session() (login e revalidação).
+- Teste automatizado em navegador (Chromium) com rede lenta de 450 ms:
+  * Versão anterior: ao voltar para a aba, a rolagem ia a 0 e o formulário era recriado;
+    sem sinal, o usuário era jogado na tela de login.
+  * Esta versão: rolagem, formulário e campos mantidos; sem sinal, a tela continua aberta.
+  * Também testados: trocar de aba do portal e voltar, recarga completa da página e login.
+- Marca de versão na lateral do portal (abaixo do nome). Se NÃO aparecer "versão 2026-11-06c",
+  o site ainda está servindo arquivos antigos: confira a publicação no Netlify (Deploys) e
+  se o ZIP foi publicado na raiz, não dentro de uma subpasta.

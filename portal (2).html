@@ -1,0 +1,58 @@
+<!docty
+  pe html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dopamina 3D · Área do Cliente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f1ea;--fg:#14110f;--mut:#716b63;--card:#fffdf8;--line:rgba(20,17,15,.12);--lime:#c6f432;--pink:#ff3d8b;--green:#16834a;--red:#bd3434}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px Poppins,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px 1fr}.side{background:#14110f;color:#f4f1ea;padding:24px 16px;display:flex;flex-direction:column;gap:22px}.brand{font-size:24px;font-weight:700;letter-spacing:-1px;padding:0 10px}.brand span{background:var(--lime);color:#14110f;padding:0 5px;border-radius:5px}.who{padding:12px;border:1px solid #ffffff25;border-radius:12px;color:#c9c3ba;font-size:12px}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#ddd6cc;text-align:left;padding:11px 12px;border-radius:10px}.nav button.active,.nav button:hover{background:#ffffff16;color:#fff}.nav button .dot{display:inline-block;width:8px;height:8px;background:var(--pink);margin-right:10px}.side-foot{margin-top:auto;display:grid;gap:8px}.side-foot a,.side-foot button{color:#ddd6cc;background:transparent;border:1px solid #ffffff2b;border-radius:10px;padding:10px;text-decoration:none;text-align:center}
+main{padding:32px;max-width:1500px;width:100%;margin:0 auto}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:26px}.eyebrow{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:2px}.top h1{font-size:28px;margin:3px 0;font-weight:600}.pill{display:inline-flex;align-items:center;border-radius:99px;padding:5px 10px;background:#f0ebdf;color:#665d50;font-size:11px}.btn{border:0;background:var(--lime);color:#14110f;border-radius:999px;padding:11px 17px;font-weight:600}.btn.secondary{background:transparent;border:1px solid var(--line)}.btn.danger{background:#ffe5e5;color:#8e2222}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}.metric small{color:var(--mut)}.metric strong{display:block;font-size:27px;margin-top:8px}.metric em{font-style:normal;color:var(--mut);font-size:11px}.section{margin-top:22px}.section h2{font-size:17px;margin:0 0 12px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.between{justify-content:space-between}.muted{color:var(--mut)}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:620px}.table th,.table td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:middle}.table th{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.7px}.table td{font-size:13px}.status{padding:4px 8px;border-radius:99px;background:#eee;font-size:11px}.status.ok{background:#e4f4e9;color:#176b3b}.status.wait{background:#fff2d7;color:#805800}.status.bad{background:#ffe5e5;color:#9a2929}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:var(--mut)}input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:11px;color:var(--fg)}textarea{min-height:85px;resize:vertical}.actions{display:flex;gap:8px;flex-wrap:wrap}.hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:20px}.login-card{width:min(440px,100%);background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 18px 60px #14110f12}.login-card h1{font-size:28px;margin:10px 0 4px}.login-card p{color:var(--mut);line-height:1.6}.login-card .field{margin:14px 0}.logo-mark{width:54px;height:54px;border:6px solid #14110f;border-right-color:transparent;border-bottom-color:#14110f;position:relative}.logo-mark:after{content:"";position:absolute;width:12px;height:12px;background:var(--pink);right:-9px;top:4px}.alert{padding:12px;border-radius:10px;background:#fff2d7;color:#765400;font-size:12px;line-height:1.5;margin:12px 0}.empty{padding:26px;text-align:center;color:var(--mut)}.filelink{color:#7053a8;text-decoration:none}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#14110f;color:white;padding:12px 18px;border-radius:12px;display:none;z-index:99;max-width:90vw}.toast.show{display:block}.login-links{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}.link-btn{border:0;background:transparent;color:#7053a8;text-decoration:underline;padding:6px 0;font-size:12px}.btn:disabled{opacity:.55;cursor:wait}#resetPasswordBox{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}#resetPasswordBox h2{font-size:21px;margin:0 0 8px}#resetPasswordBox p{font-size:13px;line-height:1.55;color:var(--mut)}#resetPasswordBox .field{margin:12px 0}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ff3d8b;outline-offset:2px}.side{position:sticky;top:0;height:100vh;overflow:auto}main{min-width:0}.table-wrap{max-width:100%}.nav button{min-height:42px}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.side{padding:14px;gap:12px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap}.side-foot{display:flex}.who{display:none}main{padding:20px 14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:1fr 1fr;gap:8px}.card{padding:13px}.metric strong{font-size:21px}.top h1{font-size:23px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+<meta name="color-scheme" content="light dark"><script>(function(){try{var v=localStorage.getItem('dopamina3d-theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',v==='light'||v==='dark'?v:(d?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><link rel="stylesheet" href="theme-global.css"><meta name="referrer" content="no-referrer"><link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dopamina 3D"><link rel="apple-touch-icon" href="/assets/icon-192.png">
+</head>
+<body><button type="button" class="theme-toggle-global" data-theme-toggle aria-label="Alternar tema" title="Alternar tema" aria-pressed="false"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2Z"></path></svg></button>
+<div id="loginView" class="login">
+ <div class="login-card">
+  <div class="logo-mark"></div><div class="eyebrow" style="margin-top:18px">Dopamina 3D · Portal</div>
+  <h1>Área do Cliente</h1><p>Acesse seu ambiente de gestão, pedidos e relacionamento com a Dopamina 3D.</p>
+  <div class="alert hidden" id="configAlert">Configure o Supabase em <b>portal-config.js</b> e execute o arquivo <b>supabase/schema.sql</b> antes de liberar o acesso.</div>
+  <form id="loginForm">
+   <div class="field"><label>E-mail</label><input id="email" type="email" autocomplete="username" required placeholder="seu@email.com"></div>
+   <div class="field"><label>Senha</label><input id="password" type="password" autocomplete="current-password" required placeholder="Sua senha"></div>
+   <button class="btn" style="width:100%;margin-top:8px" type="submit">Entrar</button><div class="login-links"><button type="button" class="link-btn" id="forgotPassword">Esqueci minha senha</button><span class="muted" style="font-size:11px">Acesso mediante convite</span></div>
+  </form>
+  <p id="loginMsg" aria-live="polite"></p><p style="font-size:11px">Problemas de acesso? Entre em contato com a administração da Dopamina 3D.</p>
+ </div>
+</div>
+<div id="appView" class="shell hidden">
+ <aside class="side">
+  <div class="brand">dopamina<span>3d</span></div><div class="who" id="userInfo">Carregando perfil...</div>
+
+  <nav class="nav" id="nav"></nav>
+  <div class="side-foot">
+  <section class="pwa-account-install" id="pwaInstallArea" aria-label="Aplicativo Dopamina 3D">
+   <button type="button" class="pwa-account-install-button" id="pwaInstallButton">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v3h14v-3"/></svg><span>Instalar aplicativo</span>
+   </button>
+   <p class="pwa-account-install-status" id="pwaInstallStatus" aria-live="polite"></p>
+  </section><a href="index.html">← Voltar ao catálogo</a><button id="logout">Sair da conta</button></div>
+ </aside>
+ <main>
+  <div class="top"><div><div class="eyebrow" id="crumb">Dopamina 3D</div><h1 id="pageTitle">Visão geral</h1></div><span class="pill" id="rolePill">Acesso</span></div>
+  <div id="content"></div>
+ </main>
+</div>
+<div id="toast" class="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="portal-config.js"></script>
+<script src="portal.js?v=20261110e"></script>
+<script src="theme-global.js"></script><script src="/pwa-install.js" defer></script>
+</body></html>

@@ -1,0 +1,23 @@
+DOPAMINA 3D — ATUALIZAÇÃO CONTRATOS E EXPEDIÇÃO v13
+
+BASE: pacote v11 de recuperação das imagens/GIFs. A v12 foi descartada e não foi usada.
+
+ALTERAÇÕES:
+1. Contratos:
+   - cards com avatar de iniciais, revendedor, título, situação e data;
+   - botão atual de encerrar preservado como ícone, agora vermelho;
+   - mantém o fluxo existente de gerar contrato, anexar, abrir e editar dados.
+2. Expedição:
+   - após a remessa estar Entregue, o administrador pode registrar acerto;
+   - formulário registra data, valor efetivamente recebido e se houve peças não vendidas;
+   - quando houver sobras, exige descrição e quantidades;
+   - valor positivo é lançado no Financeiro com a data informada;
+   - valor zero registra o acerto sem criar receita fictícia;
+   - remessa fica marcada como acertada, impedindo novo acerto.
+3. Não altera autenticação, Edge Functions ou políticas RLS.
+4. Mantém assets e catalog-sync.js da v11.
+
+ANTES DO DEPLOY:
+- Execute migration-acerto-consignacao-detalhado.sql no Supabase.
+- Publique a pasta dopamina3d-portal-mobile-drawer-v4 inteira na Netlify.
+- Não substitua nem remova a pasta assets.

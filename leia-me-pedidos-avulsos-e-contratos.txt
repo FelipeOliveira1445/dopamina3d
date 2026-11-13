@@ -1,0 +1,41 @@
+DOPAMINA 3D — PEDIDOS AVULSOS + GERADOR DE CONTRATO (build 2026-11-07a)
+
+PUBLICAR (nesta ordem)
+1. Supabase > SQL Editor: rode migration-pedidos-avulsos-contratos.sql (cria 4 tabelas com RLS).
+2. Reimplante a Edge Function admin-users (ela agora devolve o user_id do convidado):
+   supabase functions deploy admin-users
+3. Publique o conteúdo do ZIP no Netlify (portal.html, portal.js, contract-template.js e netlify.toml mudaram).
+4. Confira "versão 2026-11-07a" na lateral do portal.
+
+1) PEDIDOS AVULSOS (aba Pedidos, abaixo da gestão de pedidos; admin e colaborador)
+- "+ Novo pedido avulso": cliente (nome, WhatsApp, e-mail opcional), canal, status, pagamento e itens.
+- Cada item pode ser: peça ATIVA do catálogo, peça INATIVA / sem estoque, ou "Outra peça (fora do catálogo)" com descrição livre.
+  Preço vem do catálogo, mas é editável. O sistema grava a situação da peça no momento do pedido.
+- Na lista: alterar status, marcar pago/pendente, ver itens; só o admin exclui.
+- Não mexe no estoque nem no Financeiro. Registra o pedido e o total.
+
+2) GERAR CONTRATO (aba Contratos, admin): botão "+ Gerar contrato"
+- Preencha: PF ou PJ, nome/razão social, nome fantasia, CPF/CNPJ, e-mail, WhatsApp, endereço/sede,
+  representante legal (CPF e cargo, só PJ), nº da remessa e as peças do Anexo I (já vem com a sua lista padrão, editável).
+- Gera o PDF com o texto do seu modelo (cláusulas 1 a 11, Anexo I e Anexo II), salva em Contratos
+  (situação "aguardando assinatura") e ENVIA O CONVITE de revendedor com o nome e o e-mail informados.
+- Dados do CONSIGNANTE (nome, CPF, endereço, PIX...): preencha uma vez em "Dados do consignante"; ficam no banco,
+  visíveis só ao admin. Não ficam no código do site.
+- Se o e-mail já tiver conta, o convite falha e nada é salvo: use "Anexar contrato" para esse caso.
+- O contrato assinado continua entrando por "Anexar contrato".
+
+AJUSTES NO TEXTO DO CONTRATO (só digitação, sem mudar o sentido)
+- "O consignante/O CONSIGNANTE" padronizados; removidos ", ," duplicado e "a solicitar" sobrando; incluído "ao" em "devido ao CONSIGNANTE".
+- Reveja com um advogado as cláusulas 4.2 (redação) e 5.3 (multa, juros e protesto).
+
+SEGURANÇA
+- netlify.toml agora bloqueia /*.sql, /supabase/* e /LEIA-ME* no site público.
+- Gerador de PDF carregado de cdn.jsdelivr.net (pdf-lib 1.17.1, versão fixa), já permitido na política de segurança.
+
+ATUALIZAÇÃO DE DESIGN DO CONTRATO (build 2026-11-07b)
+- Cabeçalho: faixa creme #F4F1EA, seu logo (D de quadrados com o quadradinho rosa #FF3D8B) desenhado em vetor a partir do
+  01_profile_photo.svg, "dopamina" + selo lima #C6F432 "3d", slogan espaçado, bloco preto à direita e linha lima.
+- Título com marca-texto lima. Caixas das partes com fundo #F7F5EF: barra lima no CONSIGNANTE e barra ROSA na CONSIGNATÁRIA.
+- Tabelas com cabeçalho preto e linha de total lima. Rodapé com quadradinho rosa.
+- Fonte Poppins (a mesma do site): arquivos em assets/fonts/ (licença SIL OFL, uso livre). O PDF carrega o fontkit 1.1.1 do
+  jsDelivr para embutir a fonte. Se a fonte ou o fontkit não carregarem, o portal avisa e gera com a fonte padrão, sem travar.

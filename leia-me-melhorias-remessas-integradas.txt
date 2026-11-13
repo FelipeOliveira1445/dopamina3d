@@ -1,0 +1,34 @@
+DOPAMINA 3D — MELHORIAS DE REMESSAS, EXPEDIÇÃO E PAGAMENTOS
+
+PACOTE BASEADO NA VERSÃO MAIS RECENTE DISPONÍVEL DO PORTAL.
+
+O QUE FOI ALTERADO
+1. Edição de pedido: o campo de arredondamento não é renderizado para revendedores. O envio ao banco também força p_round=false no perfil revendedor. Administrador e colaborador continuam com o controle.
+2. Minhas remessas: mostra somente remessas de consignação do próprio revendedor. O revendedor só dispõe do botão Entregue; a confirmação pede confirmação Sim/Não. Não há controle de status anterior na interface.
+3. Expedição: equipe pode alterar os três status (Em produção, Enviada, Entregue), criar remessas de consignação manualmente e inserir várias peças/quantidades, inclusive descrição fora do catálogo.
+4. Pedidos de consignação: a migração cria automaticamente uma remessa associada ao pedido quando seus itens são gravados. A descrição é montada a partir dos itens do pedido.
+5. Contrato novo: após gerar o contrato e salvar os dados, o portal cria a remessa inicial de consignação com descrição baseada nos itens do Anexo I.
+6. Compra aprovada: revendedor vê Anexar Pagamento em destaque e pode enviar PDF/JPG/PNG/WebP até 10 MB.
+
+PUBLICAÇÃO — ORDEM OBRIGATÓRIA
+1. Faça backup do banco e do portal atual.
+2. No Supabase SQL Editor, execute o arquivo migration-remessas-integradas-pagamentos.sql, inteiro, uma única vez.
+3. Publique no Netlify o conteúdo da pasta dopamina3d-portal-mobile-drawer-v4, substituindo os arquivos existentes. Preserve portal-config.js e quaisquer segredos/configurações do seu ambiente. Não publique chaves service_role no frontend.
+4. Faça Ctrl+F5 ou teste em janela anônima.
+
+SEGURANÇA NO BANCO
+- O RPC reseller_confirm_shipment_delivery só permite que o próprio revendedor confirme Entregue em remessa de consignação própria. Não permite regressão de status.
+- O RPC attach_order_payment valida que o pedido pertence ao revendedor, é de compra e está aprovado.
+- O bucket order-payments é privado. O revendedor grava apenas dentro da própria pasta; a equipe pode ler os anexos.
+- A migração não amplia políticas RLS de shipments/orders.
+
+TESTES RECOMENDADOS
+A. Entrar como revendedor e editar pedido: confirmar que arredondamento não aparece.
+B. Fazer pedido de consignação: confirmar que aparece em Minhas remessas e em Expedição.
+C. Como revendedor, tentar confirmar Entregue; cancelar com Não e confirmar que nada muda; depois confirmar Sim.
+D. Como equipe, criar remessa manual com dois modelos e conferir a descrição.
+E. Gerar contrato novo com itens no Anexo I e verificar a remessa inicial automática.
+F. Fazer pedido de compra, aprovar como equipe e anexar comprovante como revendedor.
+
+LIMITAÇÕES DE VALIDAÇÃO
+O JavaScript foi validado sintaticamente com node --check. Não foi possível executar testes ponta a ponta contra o seu projeto Supabase/Netlify real. A geração do convite e do PDF já existia no portal e foi mantida; esta alteração acrescenta o registro automático da remessa inicial após a criação do contrato. Revise as políticas de Storage existentes se houver políticas personalizadas que conflitem com o bucket order-payments.

@@ -1,0 +1,33 @@
+DOPAMINA 3D — MELHORIAS DE PEDIDOS E CONTRATOS (build 2026-11-08a)
+
+PUBLICAR (nesta ordem)
+1. Supabase > SQL Editor: rode migration-edicao-pedidos.sql (depois da migration-pedidos-avulsos-contratos.sql).
+   Cria o arredondamento e as funções que editam pedidos (e travam depois de "Em produção"). Sem isso, "Editar" não salva.
+2. Publique o conteúdo do ZIP no Netlify e confira "versão 2026-11-08a" na lateral.
+(Sem mudança na função admin-users.)
+
+PEDIDOS
+- Editar antes da produção: botão "Editar" em Gestão de pedidos (pedidos de revendedores) e em Pedidos avulsos.
+  Só aparece com status "Aguardando análise" ou "Aprovado". Altera peças, quantidades e preços; o total é recalculado.
+  A trava também existe no banco: depois de "Em produção" nem pela API dá para alterar.
+- Arredondamento do total (caixa marcada por padrão, dá para desmarcar): centavos de 01 a 50 viram ,50 e de 51 a 99 viram ,99.
+  Valor inteiro fica como está (24,00 continua 24,00). Ex.: 22,20 vira 22,50; 23,52 vira 23,99. O subtotal fica registrado.
+- Central de produção agora mostra os pedidos avulsos (etiqueta "Avulso") e o "Avançar" também funciona neles.
+- Mudar status em Gestão de pedidos não abre mais a caixa do navegador: atualiza e mostra "Status atualizado.", como nos avulsos.
+  Só "Iniciar produção" pede confirmação, num aviso no estilo do portal, porque depois dele o pedido não pode mais ser editado.
+
+CONTRATO
+- PF mostra só: nome completo, CPF, e-mail, WhatsApp, endereço e tratamento (o consignatário / a consignatária).
+  PJ mostra: razão social, nome fantasia, CNPJ, e-mail, WhatsApp, endereço da sede, representante legal, CPF e cargo.
+- Texto justificado no PDF e concordância automática (ao/à, o/a, CONSIGNATÁRIO/CONSIGNATÁRIA, inscrito/inscrita). PJ usa feminino.
+- Data do contrato preenchida no final ("Goiânia – GO, 8 de novembro de 2026.") e "Data da remessa" do Anexo II.
+- Anexo I começa vazio. Novo grupo "Outros". Se o modelo for uma peça ATIVA do catálogo, o varejo sugerido vem do preço do site
+  e o repasse vem do custo cadastrado em Produtos (confira: se o custo não for o seu preço de repasse, ajuste na linha).
+- Cartão do total de repasse (lima, número grande) e quantidade de peças no formulário; no PDF o total fica em caixa escura com o valor em lima.
+- Editar dados depois de gerado: botão "Editar dados" na lista de Contratos. Gera o PDF de novo, mantém o convite e o e-mail de acesso.
+
+VISÃO GERAL (build 2026-11-08b) — sem SQL novo
+- Novo cartão "Pedidos avulsos": quantidade, quantos estão em andamento e quanto falta receber (não pagos e não cancelados).
+- "Pedidos recebidos", "Aguardando análise" e "Em produção" agora somam os avulsos.
+- Em "Pedidos recentes" os avulsos aparecem com a etiqueta "Avulso".
+- Atenção: pedido avulso marcado como pago NÃO entra sozinho na "Receita do mês"; esse valor vem dos lançamentos do Financeiro.

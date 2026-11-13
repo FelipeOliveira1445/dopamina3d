@@ -1,0 +1,30 @@
+CORREÇÃO DO ERRO 403 OPTIONS — product-admin
+
+Diagnóstico:
+- A origem do portal https://dopamina3d.netlify.app já está na allow-list do código.
+- O erro 403 em OPTIONS é compatível com o gateway de verificação JWT bloqueando o preflight antes que a Edge Function responda.
+- A função product-admin já valida a sessão no próprio código: exige Authorization Bearer, chama auth.getUser() e verifica perfil ativo admin/collaborator antes de usar o cliente admin.
+
+Correção:
+- Foi adicionado supabase/config.toml com:
+  [functions.product-admin]
+  verify_jwt = false
+
+IMPORTANTE:
+- Isso NÃO torna a operação administrativa pública. A validação explícita de JWT e perfil continua obrigatória dentro da função.
+- Não remova o bloco de auth.getUser() nem a verificação de perfil.
+- Não use --no-verify-jwt como ajuste isolado sem publicar este código e manter a validação interna.
+- Não altere service_role, RLS ou permissões SQL.
+
+Publicação:
+1. Extraia o ZIP.
+2. No PowerShell, entre na pasta principal dopamina3d-portal-mobile-drawer-v4 (a pasta que contém a pasta supabase).
+3. Execute:
+   npx supabase functions deploy product-admin
+4. Não acrescente --no-verify-jwt ao comando. A configuração já está no config.toml.
+5. No Supabase > Edge Functions > product-admin > Logs, repita o teste. O OPTIONS deve deixar de retornar 403.
+6. Teste Ativar/Desativar com uma conta admin ou colaborador.
+
+Se ainda falhar:
+- Abra Edge Functions > product-admin > Invocations e envie o detalhe da requisição POST e sua resposta.
+- Não envie tokens JWT, chaves secret ou service_role em prints.

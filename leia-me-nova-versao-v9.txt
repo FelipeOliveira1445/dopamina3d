@@ -1,0 +1,28 @@
+DOPAMINA 3D — VERSÃO 9 | AUDITORIA, CATEGORIAS E NAVEGAÇÃO DO CADASTRO
+
+NOVIDADES
+1. Auditoria ampliada: o arquivo migration-auditoria-completa.sql registra INSERT, UPDATE e DELETE em todas as tabelas BASE do schema public, exceto audit_logs. Registra usuário/perfil quando autenticado, data/hora, tabela, chave do registro, operação, campos alterados e snapshots antes/depois. Operações sem usuário autenticado são identificadas como Sistema.
+2. A migração é reexecutável e reinstala os gatilhos existentes. Ela também permite incluir tabelas públicas criadas posteriormente quando for executada novamente.
+3. Categoria de produto: campo com sugestões das categorias já utilizadas. Também aceita texto livre; ao salvar o produto com uma categoria nova, ela passa a aparecer nas sugestões dos próximos cadastros.
+4. Novo produto: o botão rola suavemente até o formulário, com alinhamento no início da área visível.
+
+PUBLICAÇÃO
+1. Faça backup do ZIP/pasta atualmente publicada e do banco.
+2. No Supabase SQL Editor, execute migration-auditoria-completa.sql. É necessário executar esta atualização para que a cobertura ampliada da auditoria passe a valer no banco.
+3. Publique o conteúdo desta pasta no diretório raiz do Netlify.
+4. Preserve portal-config.js e as configurações específicas do seu projeto. Não substitua a URL nem a chave anon do Supabase.
+5. Após a publicação, faça Ctrl+F5 e valide com um usuário administrador.
+
+TESTES RECOMENDADOS
+- Criar produto com uma categoria nova; abrir outro cadastro e verificar se a categoria aparece como sugestão.
+- Clicar em Novo produto e verificar a rolagem até o formulário em desktop e celular.
+- Alterar um produto, estoque, pedido e lançamento financeiro; verificar os eventos na aba Auditoria.
+- Confirmar que colaborador e revendedor não conseguem abrir a auditoria.
+- Testar alterações feitas por rotinas automáticas: quando não houver auth.uid(), o ator deve aparecer como Sistema.
+
+OBSERVAÇÕES
+- A auditoria registra alterações no banco, não cliques, navegação ou abertura de modais.
+- Eventos históricos anteriores à instalação/atualização dos gatilhos não são reconstruídos.
+- Os snapshots guardam os dados completos das linhas alteradas. Restrinja o acesso e defina uma política de retenção compatível com a LGPD.
+- A gravação é feita por gatilhos SECURITY DEFINER. A leitura permanece restrita pela política public.is_admin().
+- A integração de assinatura digital por API não foi incluída nesta versão. O fluxo atual de contratos foi preservado.

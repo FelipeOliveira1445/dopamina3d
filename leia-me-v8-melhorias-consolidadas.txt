@@ -1,0 +1,23 @@
+DOPAMINA 3D — PORTAL V8
+Melhorias consolidadas a partir da versão v7.
+
+INCLUÍDO
+1. Produtos e Estoque: corrigido o carregamento do custo unitário na edição. O editor recebe o custo salvo em product_internal_data. Se não houver custo cadastrado, exibe R$ 0,00. Ao editar outros campos, o custo existente é preservado. Rascunhos antigos com custo zero não sobrescrevem um custo positivo já salvo.
+2. Auditoria: ao entrar na aba Auditoria, o portal consulta novamente o Supabase em vez de restaurar a tela antiga do cache de abas. O botão Atualizar continua disponível.
+3. Relatórios: cada base (Pedidos, Produtos e estoque, Financeiro e Expedição) permite exportar JSON, XLS compatível com Excel, PDF via impressão do navegador/Salvar como PDF e CSV.
+4. Mantidos os recursos da v6 (comprovantes, cores dos botões de Contratos e rolagem do Novo lançamento) e v7 (Auditoria administrativa).
+
+PUBLICAÇÃO
+- Faça backup dos arquivos atuais.
+- Extraia o ZIP e publique o conteúdo da pasta dopamina3d-portal-mobile-drawer-v4 na raiz do Netlify.
+- Preserve portal-config.js e configurações específicas do projeto.
+- Não há nova migração SQL nesta v8. Mantenha a migração de auditoria já executada na v7.
+- Atualize o navegador com Ctrl+F5.
+
+OBSERVAÇÕES DE EXPORTAÇÃO
+- XLS é gerado como planilha HTML compatível com Microsoft Excel (arquivo .xls), sem biblioteca externa.
+- PDF abre uma janela de impressão; selecione “Salvar como PDF” no navegador.
+- Exporta os registros carregados na consulta atual de cada relatório.
+
+VALIDAÇÃO
+JavaScript deve passar em node --check. Testes finais de banco, permissões e interface devem ser realizados no Supabase/Netlify do usuário.

@@ -1,0 +1,39 @@
+DOPAMINA 3D — PWA / WEBAPK
+
+O QUE É
+- Este pacote transforma o site em uma Progressive Web App (PWA).
+- No Android, o Chrome poderá oferecer instalação como WebAPK, integrado à tela inicial e à gaveta de aplicativos.
+- Não é um APK Android independente compilado para distribuição na Play Store. O WebAPK é gerado/gerenciado pelo Chrome a partir do site e do manifesto.
+
+INSTALAÇÃO
+1. Publique a pasta do projeto no Netlify mantendo a estrutura.
+2. Acesse https://dopamina3d.netlify.app/portal no Google Chrome do Android.
+3. Aguarde o aviso "Instale a Dopamina 3D" ou use o menu ⋮ > Instalar app / Adicionar à tela inicial.
+4. Confirme a instalação. O ícone Dopamina 3D aparecerá no celular.
+5. Faça login normalmente. A PWA usa o mesmo domínio e a mesma sessão do site.
+
+ATUALIZAÇÕES
+- O Service Worker verifica atualizações em cada carregamento e quando o app volta ao primeiro plano.
+- O HTML das páginas, JavaScript, CSS, chamadas Supabase e dados do usuário NÃO são armazenados em cache.
+- A navegação sempre tenta buscar a versão mais recente do Netlify.
+- Uma nova versão do Service Worker aguarda as abas antigas serem fechadas antes de assumir o controle, evitando interromper formulários ainda abertos. Ao fechar e abrir novamente o app, a versão publicada mais recente será carregada.
+- O Chrome administra atualizações do WebAPK quando propriedades relevantes do manifesto mudam; alterações comuns do site são entregues pelo conteúdo web sem precisar recriar o WebAPK.
+
+SEGURANÇA E PRIVACIDADE
+- Não armazenar em cache contratos, comprovantes, PDFs, imagens privadas, páginas autenticadas, tokens ou respostas do Supabase.
+- O modo offline oferece somente uma tela informativa. Login, financeiro, estoque, expedição e demais operações exigem conexão.
+- Não colocar service_role no frontend.
+- O Service Worker intercepta apenas navegações do próprio domínio e usa rede como primeira opção.
+- A instalação não cria cópia independente do banco, do Supabase ou do site.
+
+IDENTIDADE
+- Nome: Dopamina 3D
+- Ícone: marca existente da Dopamina 3D
+- Cores: carvão #14110F, creme #F4F1EA, verde-limão #C6F432.
+- Início do app: /portal
+- Escopo: todo o domínio (/) para incluir catálogo, login, cadastro e portal.
+
+OBSERVAÇÕES
+- A instalação WebAPK é suportada principalmente pelo Chrome no Android. Em iPhone/iPad, use Safari > Compartilhar > Adicionar à Tela de Início; o comportamento e os recursos instaláveis são diferentes.
+- Atualizações do conteúdo web seguem os deploys do Netlify. A atualização do invólucro WebAPK (nome, ícone, cores, escopo) é controlada pelo Chrome e não ocorre instantaneamente a cada deploy.
+- Testar instalação, login, anexos e navegação em Android real após publicar.

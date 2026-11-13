@@ -1,0 +1,24 @@
+CORREÇÃO — RELACIONAMENTO shipments / profiles
+
+Causa:
+A tabela shipments possui mais de uma FK para profiles:
+- reseller_id -> profiles.id
+- settled_by -> profiles.id
+
+O PostgREST não consegue escolher automaticamente qual relacionamento usar em profiles(full_name), retornando:
+Could not embed because more than one relationship was found for 'shipments' and 'profiles'.
+
+Correção:
+As consultas das telas Expedição e Relatórios agora indicam explicitamente:
+profiles!shipments_reseller_id_fkey(full_name)
+
+Assim, o nome exibido é o do revendedor da remessa, não o responsável pelo acerto.
+
+Publicação:
+1. Publique os arquivos do pacote no Netlify, preservando portal-config.js e demais configurações.
+2. Não é necessária migração SQL nem deploy de Edge Function para esta correção.
+3. Atualize a página com Ctrl+F5 e teste Expedição e Relatórios.
+
+Validação:
+- portal.js e portal (2).js passaram no node --check.
+- Não foram alteradas tabelas, RLS, políticas, Edge Functions ou chaves.

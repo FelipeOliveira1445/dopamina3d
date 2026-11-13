@@ -1,0 +1,29 @@
+DOPAMINA 3D — MELHORIAS DE UX, ACESSO E PRODUTOS
+
+ANTES DE PUBLICAR
+1. Faça backup do site e do banco.
+2. No Supabase > SQL Editor, execute migration-product-images.sql.
+3. Confirme em Storage que o bucket product-images está público para leitura (necessário para exibir imagens no catálogo). Upload/alteração/exclusão são restritos a admin e colaborador via public.is_staff().
+4. Publique os arquivos deste pacote no Netlify, preservando portal-config.js, arquivos de configuração, assets e a estrutura de pastas.
+5. Faça Ctrl+F5 e teste com uma conta admin e uma conta collaborator.
+
+MELHORIAS INCLUÍDAS
+- Login com convite pendente: se a pessoa já entra com a senha que escolheu no cadastro, o portal tenta concluir o indicador de primeiro acesso com essa mesma senha, sem pedir que escolha outra senha. O fluxo de link de convite continua exigindo criação de senha quando o usuário ainda não possui uma.
+- Cargo/função do colaborador virou lista de opções.
+- Central de produção mostra também pedidos cancelados e indicadores de concluídos/cancelados.
+- Edição de produto abre logo abaixo da linha selecionada.
+- Financeiro: fluxo de anexos com validação, tratamento de erro e prevenção de submissão/reload acidental; botão de salvar com ícone.
+- Confirmação modal de exclusão com checkbox obrigatório e ações Sim/Não para exclusão de lançamentos e anexos.
+- Botões de salvar usam o ícone de disquete inspirado na referência enviada.
+- Cadastro/edição de produto permite selecionar PNG, JPG, WebP ou GIF até 8 MB. O upload é feito no bucket product-images e a URL pública é gravada no campo image_url.
+- Melhorias visuais na tela de usuários/equipe.
+
+SEGURANÇA
+- Não foi incluída chave service_role no frontend.
+- A chave publishable/anon continua no portal-config.js.
+- O bucket product-images é público somente para leitura de imagens de catálogo. Upload, atualização e exclusão são limitados a usuários autenticados cujo papel seja admin ou collaborator.
+- Não foram alteradas as políticas RLS de pedidos nem concedidos privilégios diretos para gravar produtos. O cadastro de produto continua passando pela Edge Function product-admin.
+- O ajuste do primeiro acesso utiliza a Edge Function admin-users existente (ação complete_setup). Essa função precisa estar implantada e configurada com SUPABASE_SERVICE_ROLE_KEY exclusivamente nos secrets server-side.
+
+LIMITAÇÃO
+- O arquivo de imagem selecionado no formulário não é preservado como arquivo binário no rascunho local se a página for fechada. Os demais campos e a URL são preservados pelo salvamento automático. Se a página for recarregada, selecione novamente o arquivo antes de salvar.

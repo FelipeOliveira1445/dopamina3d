@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Atualizando acesso | Dopamina 3D</title>
+<meta name="color-scheme" content="light dark"><script>(function(){try{var v=localStorage.getItem('dopamina3d-theme');var d=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.setAttribute('data-theme',v==='light'||v==='dark'?v:(d?'dark':'light'));}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script><link rel="stylesheet" href="theme-global.css"><meta name="referrer" content="no-referrer"><link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Dopamina 3D"><link rel="apple-touch-icon" href="/assets/icon-192.png">
+</head>
+<body><button type="button" class="theme-toggle-global" data-theme-toggle aria-label="Alternar tema" title="Alternar tema" aria-pressed="false"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.6 8.6 0 1 0 20.5 14.2Z"></path></svg></button>
+  <p>Atualizando seu acesso... <a id="continue" href="criar-senha.html">Continuar</a></p>
+  <script>
+    // Compatibilidade com e-mails antigos que ainda apontam para definir-senha.html.
+    const params = new URLSearchParams(location.search);
+    const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+    const type = params.get('type') || hash.get('type');
+    const target = type === 'recovery' ? 'redefinir-senha.html' : 'criar-senha.html';
+    const destination = new URL(target + location.search + location.hash, location.href);
+    document.getElementById('continue').href = destination.href;
+    location.replace(destination.href);
+  </script>
+<script src="theme-global.js"></script><script src="/pwa-install.js" defer></script>
+</body>
+</html>

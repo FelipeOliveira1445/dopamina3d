@@ -1,0 +1,353 @@
+
+/* Dopamina 3D — sistema global de temas */
+:root{color-scheme:light;--theme-bg:#F4F1EA;--theme-fg:#14110F;--theme-muted:#625D55;--theme-card:#FBF9F4;--theme-input:#FFFFFF;--theme-border:rgba(20,17,15,.14);--theme-soft:#ECE8DE;--theme-shadow:0 18px 55px rgba(20,17,15,.08)}
+:root[data-theme="dark"]{color-scheme:dark;--theme-bg:#14110F;--theme-fg:#F4F1EA;--theme-muted:#B8B1A7;--theme-card:#211E1A;--theme-input:#29251F;--theme-border:rgba(244,241,234,.16);--theme-soft:#302B24;--theme-shadow:0 18px 55px rgba(0,0,0,.28)}
+html,body{background:var(--theme-bg)!important;color:var(--theme-fg)}
+body{transition:background-color .18s ease,color .18s ease}
+:root[data-theme="dark"] body{color-scheme:dark}
+:root[data-theme="dark"] :is(.card,.login-card,.sc,.contact-choice-card,.how-grid article,.searchbox,.quick-action,.export-button,.production-lane,.production-card,.status-options,.hint,.empty-state,.lane-empty,.production-intro,.report-hero,.order-detail-row td,.pill){background-color:var(--theme-card)!important;color:var(--theme-fg)}
+:root[data-theme="dark"] :is(p,.muted,.eyebrow,.field label,.metric small,.metric em,.price-note,.result-count,.check,.footer,.who){color:var(--theme-muted)}
+:root[data-theme="dark"] :is(input,select,textarea,.searchbox input){background-color:var(--theme-input)!important;color:var(--theme-fg)!important;border-color:var(--theme-border)!important}
+:root[data-theme="dark"] input::placeholder,:root[data-theme="dark"] textarea::placeholder{color:#9B948A}
+:root[data-theme="dark"] :is(.card,.login-card,.sc,.contact-choice-card,.quick-action,.export-button,.production-lane,.production-card,.status-options,.how-grid article){border-color:var(--theme-border)!important;box-shadow:var(--theme-shadow)}
+:root[data-theme="dark"] :is(.hint,.sc .sm,.empty-state,.lane-empty,.quick-action:hover,.export-button:hover){background:var(--theme-soft)!important;color:var(--theme-muted)}
+:root[data-theme="dark"] .pill{background:#302B24!important;color:#E8E1D7!important}
+:root[data-theme="dark"] .btn.secondary{background:transparent!important;color:var(--theme-fg)!important;border-color:var(--theme-border)!important}
+:root[data-theme="dark"] .btn.danger{background:#542A28!important;color:#FFD9D5!important}
+:root[data-theme="dark"] .status{background:#302B24!important;color:#E8E1D7!important}
+:root[data-theme="dark"] .status.ok{background:#183D2A!important;color:#A8E8BD!important}
+:root[data-theme="dark"] .status.wait{background:#493819!important;color:#FFE0A0!important}
+:root[data-theme="dark"] .status.bad{background:#542A28!important;color:#FFD9D5!important}
+:root[data-theme="dark"] .production-intro,:root[data-theme="dark"] .report-hero{border-color:#435136!important}
+:root[data-theme="dark"] .production-intro p,:root[data-theme="dark"] .report-hero p{color:#D0D8C5!important}
+:root[data-theme="dark"] .production-lane{background:#242820!important}
+:root[data-theme="dark"] .production-card{background:#292D25!important}
+:root[data-theme="dark"] .quick-action{background:#242820!important;color:var(--theme-fg)!important}
+:root[data-theme="dark"] .export-button{background:#242820!important;color:var(--theme-fg)!important}
+:root[data-theme="dark"] .order-detail-row td{background:#24211C!important}
+:root[data-theme="dark"] .logo-mark{border-color:var(--theme-fg);border-right-color:transparent;border-bottom-color:var(--theme-fg)}
+:root[data-theme="dark"] .mark{border-color:var(--theme-fg);border-right-color:transparent}
+:root[data-theme="dark"] .filelink,:root[data-theme="dark"] .link-btn{color:#D7C2FF}
+:root[data-theme="dark"] .alert{background:#493819;color:#FFE0A0}
+:root[data-theme="dark"] .how-grid article p{color:#C7BFB4!important}
+:root[data-theme="dark"] .searchbox{border-color:var(--theme-border)!important}
+:root[data-theme="dark"] .grid .card>img{background:#302B24!important}
+:root[data-theme="dark"] .side,:root[data-theme="dark"] .top{background:#0D0C0A!important}
+:root[data-theme="dark"] .top{border-bottom-color:var(--theme-border)!important}
+:root[data-theme="dark"] .side-foot a,:root[data-theme="dark"] .side-foot button{border-color:#ffffff30}
+.theme-toggle-global{position:fixed;z-index:1500;top:16px;right:18px;width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--theme-border);border-radius:14px;background:var(--theme-card);color:var(--theme-fg);box-shadow:0 5px 18px rgba(0,0,0,.12);cursor:pointer;transition:transform .18s,background .18s,border-color .18s}
+.theme-toggle-global:hover{transform:translateY(-2px);border-color:#A6CC22}
+.theme-toggle-global svg{width:19px;height:19px;display:block}
+.theme-toggle-global .moon{display:none}
+:root[data-theme="dark"] .theme-toggle-global .sun{display:none}
+:root[data-theme="dark"] .theme-toggle-global .moon{display:block}
+.theme-toggle-global:focus-visible{outline:3px solid #FF3D8B;outline-offset:3px}
+@media(max-width:600px){.theme-toggle-global{top:12px;right:12px;width:40px;height:40px}}
+
+/* Dopamina 3D — refinamentos de UX dos formulários e ações */
+.icon-save-btn{width:38px;height:38px;min-width:38px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:1px solid #159B76;border-radius:4px;background:transparent;color:#16A982;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+.icon-save-btn svg{width:17px;height:17px}
+.icon-save-btn:hover{background:rgba(22,169,130,.10);border-color:#20C997;transform:translateY(-1px)}
+.icon-save-btn:disabled{opacity:.45;cursor:wait;transform:none}
+.icon-save-btn.is-loading svg{animation:savePulse .9s ease-in-out infinite}
+@keyframes savePulse{50%{opacity:.35}}
+.image-upload-row{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;align-items:start}
+.image-preview{width:130px;aspect-ratio:1;border:1px dashed var(--line);border-radius:14px;background:var(--theme-soft);display:grid;place-items:center;overflow:hidden;color:var(--theme-muted);font-size:11px;text-align:center;padding:8px}
+.image-preview img{width:100%;height:100%;object-fit:contain}
+.image-upload-controls{display:grid;gap:8px;min-width:0}
+.inline-product-editor td{padding:10px!important;background:var(--theme-soft)!important}
+.inline-product-card{margin:0;padding:20px!important;border:1px solid var(--theme-border)!important;box-shadow:var(--theme-shadow)!important}
+.inline-product-card h2{margin-top:0}
+.inline-product-card .form-grid{gap:14px}
+.user-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.user-actions select{min-width:140px;max-width:170px}
+.user-action-btn{min-height:34px;padding:7px 11px!important;border-radius:9px!important;font-size:11px!important}
+#inviteUser{background:var(--theme-soft);border:1px solid var(--theme-border);padding:18px;border-radius:16px}
+#content .table-wrap{border:1px solid var(--theme-border);border-radius:14px;overflow:auto}
+#content .table{border-collapse:separate;border-spacing:0;min-width:760px}
+#content .table th{background:var(--theme-soft);padding:13px 12px}
+#content .table td{padding:13px 12px;vertical-align:middle}
+#content .table tbody tr:hover td{background:rgba(198,244,50,.045)}
+.production-summary{margin:16px 0 20px}
+.production-board{align-items:start}
+.production-lane.lane-cancelled{opacity:.88}
+.production-lane.lane-cancelled .production-card{border-left:3px solid #d66b6b}
+.confirm-modal{position:fixed;inset:0;z-index:3000;display:grid;place-items:center;padding:18px}
+.confirm-modal.hidden{display:none!important}
+.confirm-modal-backdrop{position:absolute;inset:0;background:rgba(8,8,7,.68);backdrop-filter:blur(5px)}
+.confirm-modal-card{position:relative;width:min(420px,100%);padding:28px;border:1px solid var(--theme-border);border-radius:20px;background:var(--theme-card);color:var(--theme-fg);box-shadow:0 25px 80px rgba(0,0,0,.28);text-align:center}
+.confirm-modal-icon{width:42px;height:42px;display:grid;place-items:center;margin:0 auto 12px;border-radius:50%;background:rgba(255,61,139,.12);color:#FF3D8B;font-size:22px;font-weight:800}
+.confirm-modal-card h2{margin:0 0 8px;font-size:21px}
+.confirm-modal-copy{margin:0 auto 18px;max-width:320px;color:var(--theme-muted);font-size:13px;line-height:1.6}
+.confirm-modal-x{position:absolute;right:13px;top:10px;border:0;background:transparent;color:var(--theme-muted);font-size:25px;cursor:pointer}
+.confirm-modal-check{display:flex;align-items:center;justify-content:center;gap:9px;margin:0 auto 20px;color:var(--theme-fg);font-size:12px}
+.confirm-modal-check input{width:17px;height:17px;accent-color:var(--lime)}
+.confirm-modal-actions{display:flex;justify-content:center;gap:10px}
+.confirm-modal-actions .btn{min-width:105px}
+.confirm-modal-actions .btn:disabled{opacity:.42;cursor:not-allowed}
+@media(max-width:600px){
+ .image-upload-row{grid-template-columns:1fr}
+ .image-preview{width:100%;max-width:180px}
+ .inline-product-card{padding:15px!important}
+ .confirm-modal-card{padding:25px 20px}
+ .confirm-modal-actions{display:grid;grid-template-columns:1fr 1fr}
+}
+
+/* Financeiro e ações destrutivas — hierarquia visual discreta e consistente */
+.finance-file-actions,.finance-row-actions{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+.finance-open-btn{display:inline-flex!important;align-items:center;gap:7px;min-height:34px;padding:7px 12px!important;border-radius:9px!important;font-size:11px!important;white-space:nowrap}
+.finance-open-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-delete-btn{width:28px;height:28px;min-width:28px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:1px solid transparent;border-radius:7px;background:transparent;color:#C45B64;cursor:pointer;opacity:.78;transition:background .16s,border-color .16s,color .16s,opacity .16s}
+.icon-delete-btn svg{width:14px;height:14px}
+.icon-delete-btn:hover{opacity:1;background:rgba(196,91,100,.10);border-color:rgba(196,91,100,.22);color:#D34D59}
+.icon-delete-btn:focus-visible{outline:2px solid #C45B64;outline-offset:2px}
+.icon-delete-btn:disabled{opacity:.35;cursor:not-allowed}
+.inline-finance-editor td{padding:10px!important;background:var(--theme-soft)!important}
+.inline-finance-card{margin:0;padding:20px!important;border:1px solid var(--theme-border)!important;box-shadow:var(--theme-shadow)!important}
+.inline-finance-card h2{margin-top:0}
+.inline-finance-card .form-grid{gap:14px}
+.finance-row-actions .btn{min-height:32px;padding:6px 11px!important;border-radius:8px!important;font-size:11px!important}
+/* Remover linha ainda não enviada: pequeno controle secundário, sem aparência de CTA. */
+#orderLines .icon-delete-btn{width:30px;height:30px;min-width:30px;border-color:var(--theme-border);color:var(--theme-muted)}
+#orderLines .icon-delete-btn:hover{color:#D34D59;border-color:rgba(196,91,100,.25);background:rgba(196,91,100,.08)}
+@media(max-width:600px){
+ .finance-file-actions,.finance-row-actions{gap:6px}
+ .finance-open-btn{min-height:32px;padding:6px 9px!important}
+ .inline-finance-card{padding:15px!important}
+}
+
+/* Contratos, produtos e expedição — ações e filtros consistentes */
+.product-row-actions,.contract-actions,.shipment-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.product-row-actions .btn{min-height:32px;padding:6px 11px!important;border-radius:8px!important;font-size:11px!important}
+.contract-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--theme-border)}
+.contract-info{min-width:0}
+.contract-actions{flex:0 0 auto}
+.contract-open-btn{display:inline-flex;align-items:center;min-height:34px;padding:7px 12px!important;border-radius:9px!important;font-size:11px!important;white-space:nowrap}
+.status-tabs{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0;padding-bottom:12px;border-bottom:1px solid var(--theme-border)}
+.status-tabs button{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--theme-border);border-radius:999px;background:var(--theme-card);color:var(--theme-muted);font-size:12px;font-weight:600;cursor:pointer}
+.status-tabs button.active{background:rgba(198,244,50,.14);border-color:#A8CE28;color:var(--theme-fg)}
+.status-tabs button span{font-size:10px;opacity:.75}
+.shipment-actions select{max-width:145px;min-width:120px}
+.shipment-settle-btn{min-height:32px;padding:6px 10px!important;border-radius:8px!important;font-size:11px!important;white-space:nowrap}
+.status.info{background:rgba(69,142,214,.14);color:#4B9AE4}
+:root[data-theme="dark"] .status.info{background:rgba(69,142,214,.2);color:#9BC9F3}
+@media(max-width:700px){
+ .contract-row{align-items:flex-start;flex-direction:column;gap:10px}
+ .contract-actions{width:100%;justify-content:flex-start}
+ .shipment-actions{align-items:flex-start}
+ .shipment-actions select{max-width:150px}
+ .status-tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:10px}
+ .status-tabs button{white-space:nowrap}
+}
+.icon-close-contract{width:30px;height:30px;min-width:30px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:1px solid rgba(190,139,49,.28);border-radius:8px;background:rgba(190,139,49,.07);color:#B9852E;cursor:pointer;transition:background .16s,border-color .16s}
+.icon-close-contract svg{width:15px;height:15px}
+.icon-close-contract:hover{background:rgba(190,139,49,.15);border-color:rgba(190,139,49,.45)}
+.icon-close-contract:focus-visible{outline:2px solid #B9852E;outline-offset:2px}
+
+/* Status do produto: ação reversível, distinta de exclusão */
+.product-row-actions{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.product-status-toggle{min-height:32px;padding:6px 10px;border:1px solid var(--theme-border);border-radius:8px;background:transparent;color:var(--theme-fg);font:inherit;font-size:11px;font-weight:650;cursor:pointer;transition:background .16s,border-color .16s,transform .16s}
+.product-status-toggle:hover{transform:translateY(-1px)}
+.product-status-toggle.is-active{border-color:rgba(198,244,50,.55);color:#789900;background:rgba(198,244,50,.10)}
+.product-status-toggle.is-inactive{border-color:rgba(22,169,130,.48);color:#138565;background:rgba(22,169,130,.08)}
+:root[data-theme="dark"] .product-status-toggle.is-active{color:#D5F78A;background:rgba(198,244,50,.12)}
+:root[data-theme="dark"] .product-status-toggle.is-inactive{color:#75D8B8;background:rgba(22,169,130,.12)}
+.product-status-toggle:disabled{opacity:.5;cursor:wait;transform:none}
+@media(max-width:600px){.product-row-actions{gap:5px}.product-status-toggle{padding:6px 8px;min-height:34px}}
+
+
+/* Dopamina 3D — refinamento de contraste e hierarquia visual */
+.quick-action>span{background:#C6F432!important;color:#14110F!important}
+.quick-action>span svg{display:block;width:19px;height:19px;stroke:currentColor;fill:none}
+:root[data-theme="dark"] .quick-action>span{background:#C6F432!important;color:#14110F!important;box-shadow:0 3px 10px rgba(198,244,50,.14)}
+:root[data-theme="dark"] .quick-action b{color:#F4F1EA!important}
+:root[data-theme="dark"] .quick-action small{color:#B8B1A7!important}
+:root[data-theme="dark"] .quick-action small i{color:#C6F432!important}
+:root[data-theme="dark"] .metric{background:linear-gradient(145deg,#24211C,#1D1A16)!important;border-color:rgba(244,241,234,.13)!important}
+:root[data-theme="dark"] .metric strong{color:#F4F1EA!important}
+:root[data-theme="dark"] .metric:after{border-color:rgba(198,244,50,.17)!important}
+:root[data-theme="dark"] .alert-symbol{background:rgba(255,61,139,.13)!important;color:#FF78AC!important}
+:root[data-theme="dark"] .status.info{background:#263A3B!important;color:#B9E9E6!important}
+:root[data-theme="dark"] .reseller-order-summary{background:#29251F;border:1px solid var(--theme-border);color:var(--theme-fg)}
+.reseller-order-summary{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 18px;border-radius:13px;background:#F4F1EA;border:1px solid #E4DFD3}
+.reseller-order-summary>div{display:grid;gap:4px}
+.reseller-order-summary small{font-size:11px;color:var(--theme-muted)}
+.reseller-order-summary strong{font-size:17px;color:var(--theme-fg)}
+.reseller-order-intro{margin-bottom:8px}
+.reseller-order-intro h2{margin:5px 0}
+.contracts-card{padding:24px}
+.contracts-header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:20px;border-bottom:1px solid var(--theme-border)}
+.contracts-heading{min-width:0}
+.contracts-heading h2{margin:4px 0 5px;font-size:22px;letter-spacing:-.5px}
+.contracts-heading p{margin:0;max-width:620px;font-size:13px;line-height:1.5}
+.contract-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;flex:0 0 auto}
+.contract-header-actions .btn{min-height:42px;padding:10px 16px!important;border-radius:11px!important;white-space:nowrap}
+.contracts-card .contract-tabs{margin:16px 0 4px;padding-bottom:14px}
+.contracts-list{display:grid;gap:0}
+.contracts-list .contract-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 4px;border-bottom:1px solid var(--theme-border)}
+.contract-info{display:grid;gap:5px;min-width:0}
+.contract-info>b{font-size:14px;color:var(--theme-fg)}
+.contract-subtitle{font-size:12px;color:var(--theme-muted)}
+.contract-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--theme-muted)}
+.contract-status{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-size:10px;font-weight:700}
+.contract-status.is-active{background:rgba(198,244,50,.14);color:#A8CE28}
+.contract-status.is-closed{background:rgba(184,177,167,.14);color:var(--theme-muted)}
+.contract-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex:0 0 auto}
+.contract-open-btn{min-height:38px!important;padding:8px 14px!important;font-size:11px!important}
+.contracts-empty{padding:36px 12px}
+:root[data-theme="dark"] .contracts-card{background:#211E1A!important}
+:root[data-theme="dark"] .contracts-list .contract-row{border-color:rgba(244,241,234,.13)}
+:root[data-theme="dark"] .contract-info>b{color:#F4F1EA}
+:root[data-theme="dark"] .contract-subtitle,:root[data-theme="dark"] .contract-meta{color:#B8B1A7}
+:root[data-theme="dark"] .contract-status.is-active{background:rgba(198,244,50,.13);color:#C6F432}
+@media(max-width:700px){
+ .contracts-card{padding:16px}
+ .contracts-header{align-items:flex-start;flex-direction:column;gap:14px}
+ .contract-header-actions{width:100%;justify-content:flex-start}
+ .contract-header-actions .btn{flex:1}
+ .contracts-list .contract-row{align-items:flex-start;flex-direction:column;gap:12px;padding:16px 2px}
+ .contract-actions{width:100%;justify-content:flex-start}
+ .contract-open-btn{flex:1;justify-content:center}
+ .reseller-order-summary{gap:12px}
+}
+
+/* Ações novas de consignação e pagamento */
+.payment-attach-btn{background:#C6F432!important;color:#14110F!important;border-color:#C6F432!important;font-weight:800!important;box-shadow:0 5px 16px rgba(198,244,50,.18)}
+.payment-attach-btn:hover{background:#D5FF45!important;color:#14110F!important;transform:translateY(-1px)}
+.shipment-delivered-btn{background:#C6F432!important;color:#14110F!important;border-color:#C6F432!important;font-weight:800!important}
+.shipment-item-line>*{min-width:0}
+@media(max-width:640px){.shipment-item-line{flex-wrap:wrap}.shipment-item-line .ship-product,.shipment-item-line .ship-free{flex:1 1 42%!important}.payment-attach-btn{width:100%;justify-content:center}}
+
+/* Ajustes de interface — pacote de refinamentos v6 */
+.order-payment-view-btn{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.order-payment-view-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+@media(max-width:640px){.order-payment-view-btn{width:100%;justify-content:center}}
+
+/* V10 — vitrine pública sincronizada */
+.catalog-featured{display:inline-flex;align-items:center;width:max-content;margin:0 0 8px;padding:5px 9px;border-radius:999px;background:#c6f432;color:#171512;font-size:11px;font-weight:800;letter-spacing:.02em}
+.catalog-details{margin:8px 0;color:var(--muted,#6f6a62);font-size:.92em;line-height:1.5}
+
+
+/* Dopamina 3D · contratos em cards e acerto de consignação */
+.contracts-list{display:grid;gap:10px}
+.contracts-list .contract-row{
+ display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;
+ padding:14px 16px;border:1px solid var(--theme-border);border-radius:14px;
+ background:var(--theme-card);border-bottom:1px solid var(--theme-border)
+}
+.contract-main{display:flex;align-items:center;gap:12px;min-width:0}
+.contract-avatar{
+ width:44px;height:44px;min-width:44px;display:grid;place-items:center;
+ border-radius:12px;background:var(--lime,#c6f432);color:#14110f;
+ font-size:13px;font-weight:800;letter-spacing:.2px
+}
+.contract-info{display:grid;gap:4px;min-width:0}
+.contract-info>b{font-size:13px;color:var(--theme-fg);line-height:1.35}
+.contract-subtitle{font-size:11px;color:var(--theme-muted);line-height:1.4}
+.contract-meta{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:10px;color:var(--theme-muted)}
+.contract-status.is-pending{background:rgba(190,139,49,.17);color:#B9852E}
+:root[data-theme="dark"] .contract-status.is-pending{background:rgba(190,139,49,.2);color:#E5C27D}
+.contract-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.contract-open-btn{min-height:36px!important}
+.icon-close-contract{
+ border:1px solid rgba(220,65,65,.48)!important;background:rgba(220,65,65,.08)!important;
+ color:#D94A4A!important
+}
+.icon-close-contract:hover{background:rgba(220,65,65,.16)!important;border-color:rgba(220,65,65,.72)!important}
+:root[data-theme="dark"] .icon-close-contract{color:#FF7777!important;border-color:rgba(255,119,119,.42)!important;background:rgba(255,119,119,.09)!important}
+:root[data-theme="dark"] .icon-close-contract:hover{background:rgba(255,119,119,.17)!important}
+.shipment-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.shipment-actions select{max-width:145px;min-width:120px}
+.shipment-settle-btn{min-height:34px;padding:7px 11px!important;border-radius:9px!important;font-size:11px!important;white-space:nowrap}
+.shipment-settled-badge{display:inline-flex;margin-top:5px}
+#settlementForm{scroll-margin-top:24px}
+#settlementForm .form-grid{margin-top:14px}
+#settlementForm textarea{min-height:82px}
+@media(max-width:760px){
+ .contracts-list .contract-row{grid-template-columns:minmax(0,1fr);gap:12px;padding:14px}
+ .contract-actions{justify-content:flex-start;width:100%}
+ .contract-actions .btn{flex:1 1 auto}
+ .shipment-actions{align-items:flex-start}
+}
+
+
+/* v14 — detalhamento do acerto de remessas */
+.shipment-settle-btn{
+ background:var(--lime,#c6f432)!important;color:#15130f!important;border:1px solid var(--lime,#c6f432)!important;
+ font-weight:800!important;border-radius:10px!important;min-height:36px;padding:8px 15px!important
+}
+.shipment-settle-btn:hover{filter:brightness(.94)}
+.settlement-confirm-btn{
+ background:var(--lime,#c6f432)!important;color:#15130f!important;border:1px solid var(--lime,#c6f432)!important;
+ font-weight:800!important;min-width:150px
+}
+.settlement-return-head{display:grid;gap:4px;margin-bottom:10px}
+.return-item-line{
+ display:grid;grid-template-columns:minmax(190px,1.3fr) minmax(160px,1fr) 86px minmax(120px,.7fr) 36px;
+ align-items:center;gap:8px;margin:9px 0;padding:10px;border:1px solid var(--theme-border);
+ border-radius:12px;background:var(--theme-card)
+}
+.return-item-line input,.return-item-line select{min-width:0;width:100%}
+.return-item-line .return-free:disabled{opacity:.72}
+.return-price-wrap{display:grid;gap:4px;font-size:10px;color:var(--theme-muted)}
+.return-price-wrap input{font-size:13px}
+.settlement-summary{
+ margin-top:16px;padding:15px;border:1px solid var(--theme-border);border-radius:13px;
+ background:var(--theme-card)
+}
+.settlement-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.settlement-summary-grid>div{display:grid;gap:4px}
+.settlement-summary-grid small{font-size:10px;color:var(--theme-muted)}
+.settlement-summary-grid b{font-size:15px;color:var(--theme-fg)}
+.settlement-summary-grid .settlement-summary-total{
+ grid-column:1/-1;padding:12px;border-radius:10px;background:rgba(198,244,50,.12);
+ border:1px solid rgba(198,244,50,.35)
+}
+.settlement-summary-total b{font-size:21px;color:var(--theme-fg)}
+.settlement-summary-total.is-invalid b{color:#D94A4A}
+@media(max-width:760px){
+ .return-item-line{grid-template-columns:minmax(0,1fr) 78px 36px}
+ .return-item-line .return-product,.return-item-line .return-free{grid-column:1/-1}
+ .return-price-wrap{grid-column:1/3}
+ .settlement-summary-grid{grid-template-columns:1fr 1fr}
+}
+
+
+/* v15 — tags de contrato, botões de abrir e escala proporcional */
+.contract-status.is-active{
+ background:var(--lime,#c6f432)!important;color:#17150f!important;border:1px solid var(--lime,#c6f432)!important;
+}
+.contract-status.is-closed{
+ background:rgba(125,125,125,.16)!important;color:var(--theme-muted)!important;border:1px solid var(--theme-border)!important;
+}
+.contract-signature{display:inline-flex;align-items:center;font-size:10px;font-weight:600}
+.contract-signature.signature-verified{color:#36A66B}
+.contract-signature.signature-unverified{color:var(--theme-muted)}
+.contract-signature.signature-invalid{color:#D94A4A}
+.contract-open-btn,.finance-open-btn,.order-payment-view-btn{
+ min-height:36px!important;height:36px!important;padding:0 12px!important;
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;
+ gap:7px!important;font-size:12px!important;line-height:1!important;border-radius:9px!important;
+ white-space:nowrap!important
+}
+.contract-open-btn svg,.finance-open-btn svg,.order-payment-view-btn svg{
+ width:15px!important;height:15px!important;min-width:15px!important;fill:none!important;
+ stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important
+}
+.contract-actions .btn,.contract-header-actions .btn,.shipment-actions .btn{
+ min-height:36px!important;height:36px!important;padding:0 12px!important;
+ display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12px
+}
+.contract-actions .icon-close-contract{width:36px;height:36px;min-width:36px;display:grid;place-items:center;padding:0!important}
+.contract-actions .icon-close-contract svg{width:16px;height:16px}
+.finance-file-actions{display:flex;align-items:center;gap:7px}
+\n/* v16 - datas dos contratos */\n.contract-meta{flex-wrap:wrap}\n.contract-meta>span{line-height:1.35}\n
+/* Ações de avanço e retrocesso na Central de Produção */
+.production-stage-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.production-stage-actions .btn{white-space:nowrap}
+
+/* Confirmação elegante das mudanças de etapa na Central de Produção */
+.production-stage-confirm-card{border-color:rgba(197,244,45,.28)}
+.production-stage-confirm-icon{width:46px;height:46px;display:grid;place-items:center;margin:0 auto 13px;border-radius:15px;background:rgba(197,244,45,.14);color:var(--lime);font-size:25px;font-weight:800}
+.production-stage-confirm-card .confirm-modal-actions .btn.primary{background:var(--lime);color:#111;border-color:var(--lime)}
+.production-stage-confirm-card .confirm-modal-actions .btn.secondary{background:transparent}

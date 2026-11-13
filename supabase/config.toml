@@ -1,0 +1,4 @@
+# A Edge Function valida o JWT do usuário dentro do código com auth.getUser().
+# O gateway não deve bloquear o preflight OPTIONS, que não leva o JWT da sessão.
+[functions.product-admin]
+verify_jwt = false

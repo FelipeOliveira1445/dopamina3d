@@ -1,0 +1,17 @@
+DOPAMINA 3D — AJUSTES DE UX NA ABA FINANCEIRO
+
+O QUE MUDOU
+- Editar um lançamento financeiro abre o formulário imediatamente abaixo da linha selecionada, seguindo o padrão da edição de estoque.
+- O botão Abrir do comprovante agora é um botão explícito e visível, com ícone de abrir/visualizar. Ele continua usando o visualizador seguro do Storage privado.
+- Excluir anexo e Excluir lançamento agora são ícones pequenos, discretos e com rótulos acessíveis (aria-label/title).
+- O modal de confirmação existente permanece obrigatório: checkbox precisa ser marcado antes de habilitar “Sim, excluir”.
+- A ação de remover uma linha ainda não enviada em uma solicitação de pedido também foi convertida para ícone pequeno e secundário.
+
+PUBLICAÇÃO
+- Não há migração SQL nova nesta atualização.
+- Publique os arquivos do pacote no Netlify, preservando portal-config.js, assets e demais arquivos de configuração.
+- Faça Ctrl+F5 e teste: editar lançamento; abrir PDF; abrir imagem; excluir anexo; excluir lançamento e cancelar exclusão.
+
+SEGURANÇA
+- Os anexos financeiros continuam no bucket privado finance-files e são abertos pelo visualizador seguro já existente.
+- Nenhuma política RLS, chave ou função server-side foi alterada.

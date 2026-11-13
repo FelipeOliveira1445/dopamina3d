@@ -1,0 +1,37 @@
+DOPAMINA 3D — MODELO DE CATÁLOGO (NOV/2026)
+
+Conteúdo:
+- index.html: catálogo redesenhado, responsivo, busca, filtros, FAQ, etapas de compra e seção de peça sob medida.
+- catalog-sync.js: sincronização Supabase atualizada para priorizar o ID do produto, atualizar cores/categoria e manter links de pedido.
+- assets/: imagens extraídas do HTML e convertidas para WebP.
+
+IMPORTANTE ANTES DE PUBLICAR:
+1. Faça backup da pasta atualmente publicada no Netlify.
+2. Mantenha na raiz o seu arquivo portal-config.js atual. Ele contém a URL e a chave pública anon do Supabase. Não substitua por um arquivo em branco e nunca coloque a service_role key no navegador.
+3. Se quiser manter o vídeo de apresentação, coloque video_geral.mp4 e/ou video_geral.webm na raiz. O modelo não força autoplay e usa uma imagem de capa; sem os arquivos de vídeo, basta remover o bloco <video id="vg"> do index.html ou deixar os arquivos antigos junto.
+4. Preserve os demais arquivos do portal/área do cliente que já existem no deploy. Este pacote é um modelo do catálogo público, não uma substituição do portal.
+5. Faça primeiro um deploy de teste no Netlify e confira: catálogo, botão Instagram, WhatsApp, busca/filtros e sincronização Supabase.
+
+Não alterei tabelas, políticas RLS, Edge Functions nem permissões do Supabase.
+
+CATEGORIAS / ABAS:
+- O catálogo inicia com as abas Todas as peças, Chaveiros, Dinos e montagem, Sensoriais, Colecionáveis e Outros.
+- Após a sincronização, o campo `category` da tabela `products` no Supabase é a fonte oficial da categoria.
+- Categorias adicionais cadastradas no Supabase também são incluídas automaticamente como novas abas.
+- Para evitar classificações erradas, preencha `category` no cadastro administrativo de cada produto.
+
+CORREÇÃO DAS ANIMAÇÕES:
+- Os GIFs animados originais foram preservados como arquivos .gif separados.
+- Não converter GIF animado para WebP estático: isso remove os quadros de animação.
+- O catálogo agora referencia os GIFs originais para manter suas animações.
+
+CORREÇÃO DE CATEGORIAS:
+- A categoria genérica "Geral" ou "Outros" do Supabase não é mais usada para classificar automaticamente todos os produtos.
+- O catálogo aplica regras de classificação por nome/descrição: Chaveiros, Dinos e montagem, Sensoriais, Colecionáveis e Acessórios e decoração.
+- Categorias específicas preenchidas no Supabase continuam sendo usadas quando o produto não se enquadra nas regras conhecidas.
+- Para novas peças, o ideal é preencher a categoria específica no cadastro administrativo.
+
+AJUSTES DE CATEGORIAS E BOTÃO:
+- A classificação ignora o valor genérico "Geral" e deriva a categoria pelo tipo/nome do produto.
+- Chaveiros têm prioridade para que chaveiros sensoriais continuem na categoria Chaveiros.
+- O botão "Quero uma peça" foi movido para a seção "Vamos transformar em uma peça" e continua abrindo o modal com escolha entre WhatsApp e Instagram.

@@ -1,0 +1,27 @@
+DOPAMINA 3D — PEDIDOS, FINANCEIRO E AUDITORIA EM PORTUGUÊS v17
+
+BASE: v16. Mantém contratos, datas, comprovantes e demais funcionalidades.
+
+PEDIDOS AVULSOS:
+- Ao alternar Pendente para Pago, o banco cria automaticamente um lançamento de receita no Financeiro.
+- Usa o total do pedido, data de criação, cliente, itens, canal e categoria "Pedido avulso".
+- Se o pedido pago for editado, o lançamento vinculado atualiza valor e descrição.
+- Ao alternar Pago para Pendente, o lançamento vinculado é removido.
+- Ao excluir o lançamento financeiro manualmente, um trigger retorna payment_status para pending.
+- Pedidos com total zero não criam receita fictícia.
+- A relação é feita por financial_transactions.manual_order_id (índice único).
+
+AUDITORIA:
+- Tradução dos nomes das tabelas/áreas, campos e perfis exibidos na interface.
+- A chave original continua disponível em fonte menor para rastreabilidade.
+- Operações Criação, Alteração e Exclusão permanecem em português.
+
+ANTES DO DEPLOY:
+1. Execute migration-pedidos-avulsos-financeiro-auditoria-v17.sql no Supabase.
+2. Publique a pasta completa na Netlify.
+3. Ctrl+F5.
+
+IMPORTANTE:
+- A migração instala triggers no banco; a sincronização não depende apenas do navegador.
+- Não apaga nem modifica lançamentos financeiros antigos que não tenham manual_order_id.
+- Não cria lançamentos retroativos para pedidos já marcados como pagos antes da migração.

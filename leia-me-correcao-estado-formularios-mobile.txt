@@ -1,0 +1,25 @@
+DOPAMINA 3D — CORREÇÃO DE FORMULÁRIOS E ANEXOS NO MOBILE
+
+O QUE FOI CORRIGIDO
+1. A navegação entre abas internas agora preserva a própria árvore DOM da aba anterior, em vez de reconstruir a página. Isso mantém formulários abertos, valores digitados, listeners e arquivos selecionados enquanto o usuário alterna entre as áreas.
+2. Removido o listener visibilitychange que podia chamar loadTab() ao retornar do seletor de arquivos/gerenciador do celular e reconstruir a tela, descartando o formulário e o arquivo selecionado.
+3. Ao voltar para uma aba visitada anteriormente, o conteúdo em memória é restaurado. A aba ainda não visitada é carregada normalmente.
+4. O formulário financeiro agora identifica explicitamente o arquivo selecionado e informa que ele só será enviado quando o usuário clicar em Salvar lançamento.
+5. O evento change do input de arquivo apenas atualiza o texto de status; não há envio automático nem submissão ao selecionar o arquivo.
+6. Adicionado aviso nativo do navegador ao tentar fechar/recarregar a página com formulário alterado. A navegação interna entre abas não é bloqueada.
+7. Mantida a validação de formato/tamanho e o upload ao bucket finance-files.
+
+COMO PUBLICAR
+- Não é necessária migração SQL nem deploy de Edge Function.
+- Publique os arquivos do ZIP no Netlify, preservando portal-config.js e os demais arquivos/configurações existentes.
+- Depois, faça Ctrl+F5 no desktop ou feche e reabra a aba no smartphone.
+
+TESTES RECOMENDADOS
+1. Financeiro: Novo lançamento > preencher campos > escolher um PDF/imagem no celular > confirmar que a tela não recarrega e que o nome do arquivo aparece > salvar.
+2. Financeiro: iniciar edição, mudar para outra aba do portal e voltar; o formulário deve continuar aberto com os valores e o anexo selecionado.
+3. Produtos e estoque: abrir edição, alterar campos, navegar para outra aba e voltar; os campos devem continuar preenchidos.
+4. Contratos e Expedição: iniciar um formulário, alternar de aba e retornar; conferir que o formulário não desapareceu.
+
+OBSERVAÇÃO TÉCNICA
+- A preservação de arquivos selecionados funciona enquanto a mesma página/aba do navegador permanece viva (inclusive quando o seletor nativo de arquivos a coloca temporariamente em segundo plano).
+- Por segurança dos navegadores, nenhum site pode restaurar automaticamente um arquivo selecionado após um recarregamento completo ou fechamento da página. O aviso beforeunload ajuda a evitar essa perda; se o navegador encerrar a página, será necessário selecionar o arquivo novamente.
