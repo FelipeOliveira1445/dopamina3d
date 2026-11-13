@@ -1,0 +1,33 @@
+DOPAMINA 3D — v20 | TEMA AUTOMÁTICO DO SISTEMA
+
+OBJETIVO
+Fazer o tema inicial do site e do portal acompanhar a preferência de aparência do sistema operacional/navegador do visitante.
+
+COMPORTAMENTO
+- Ao abrir ou recarregar qualquer página, o site consulta `prefers-color-scheme`.
+- Sistema em modo escuro: abre em modo escuro.
+- Sistema em modo claro: abre em modo claro.
+- A escolha manual pelo botão de tema permanece ativa somente durante a sessão/visita atual.
+- Ao abrir novamente ou recarregar a página, a preferência do sistema volta a ser a fonte padrão.
+- Se o sistema operacional mudar de tema durante a visita, o site acompanha a mudança enquanto o usuário não tiver feito uma escolha manual naquela sessão.
+
+IMPLEMENTAÇÃO
+- Atualizado `theme-global.js`.
+- Atualizado o script inicial de tema nas páginas HTML que carregam o tema global.
+- Removida a persistência da escolha manual em `localStorage`, que anteriormente podia contrariar a preferência atual do sistema.
+
+ESCOPO E PRESERVAÇÃO
+- Não altera paleta, logotipo, tipografia, layout, conteúdo, dados, autenticação, permissões, integrações ou banco de dados.
+- Mantém as correções anteriores de contraste e da barra lateral.
+- Pacote completo: mantém os arquivos do portal, catálogo, configuração e Supabase.
+
+VALIDAÇÃO TÉCNICA
+- Confirmado que os arquivos JS/HTML não mantêm mais a chave antiga `dopamina3d-theme` no `localStorage`.
+- Conferidos os scripts de inicialização nas páginas HTML.
+- Recomenda-se validar em navegador com o sistema configurado separadamente em claro e escuro, abrindo o site em nova sessão e testando também a alternância manual.
+
+PUBLICAÇÃO
+1. Faça backup do deploy atual.
+2. Publique o conteúdo completo extraído deste ZIP no Netlify.
+3. Faça recarga forçada (`Ctrl + F5`) ou limpe o cache do navegador.
+4. Teste em modo claro e escuro do sistema.

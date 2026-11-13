@@ -1,0 +1,14 @@
+AJUSTE — SIDEBAR DO PORTAL RESPONSIVA AO TEMA
+
+Problema:
+A barra lateral do portal administrativo estava com fundo escuro e textos claros fixos, inclusive quando o tema claro estava selecionado.
+
+Correção em portal.html:
+- Tema claro: fundo creme, textos escuros, cartão do usuário claro, links com contraste e bordas discretas.
+- Tema escuro: mantém a barra lateral escura e os textos claros.
+- Estado ativo do menu permanece verde-limão com texto escuro nos dois temas.
+- Não altera login/autenticação, permissões, dados, integrações ou navegação.
+
+Validação:
+- Verificada a presença do bloco CSS no final do head e os seletores condicionais de tema claro.
+- A validação visual final deve ser feita após deploy, alternando os dois temas no portal desktop e mobile.

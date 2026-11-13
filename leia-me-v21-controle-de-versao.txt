@@ -1,0 +1,23 @@
+DOPAMINA 3D — v21 | PADRONIZAÇÃO DO CONTROLE DE VERSÃO
+
+VERSÃO INTERNA DO PORTAL
+- A identificação exibida abaixo dos dados do administrador passa a ser exatamente: "Versão 2.1".
+- A constante BUILD em portal.js contém o número interno "2.1".
+- O texto visível é montado como "Versão " + BUILD.
+
+VERSÃO DO PACOTE
+- Nome desta entrega: dopamina3d-v21-tema-do-ajuste.zip
+- Próxima modificação: incrementar para pacote v22 e versão interna 2.2.
+- Regra contínua: vNN do arquivo corresponde à versão interna 2.NN (por exemplo, v23 = Versão 2.3).
+
+CACHE
+- Atualizada a query string de portal.js no portal.html para dopamina3d-v21, evitando que o navegador reutilize a versão anterior do script.
+
+ESCOPO
+- Alterada apenas a identificação de versão e o identificador de cache do script.
+- Nenhuma alteração de layout, dados, autenticação, permissões, banco, integrações ou regras de negócio.
+
+VALIDAÇÃO
+- Conferir portal.js: BUILD = '2.1'.
+- Conferir renderização do rótulo "Versão 2.1".
+- Conferir portal.html carregando portal.js?v=dopamina3d-v21.

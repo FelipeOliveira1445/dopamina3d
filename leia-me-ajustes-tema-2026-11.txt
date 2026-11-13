@@ -1,0 +1,22 @@
+DOPAMINA 3D — AJUSTES DE TEMA E IDENTIFICAÇÃO DA ABA
+
+Escopo aplicado:
+- Corrigido o título da página inicial e o og:title para "Dopamina 3D | Peças criativas".
+- Removido o fundo escuro global aplicado à classe genérica .top. Essa classe também é usada no cabeçalho do catálogo, e o override criava uma faixa/bloco visual indevido no modo noturno.
+- Removida a classe genérica .hint das regras que transformavam textos auxiliares em cartões/fundos no modo noturno. A cor do texto auxiliar continua adaptada ao tema.
+- Mantido o fundo escuro da navegação lateral (.side), que é um componente próprio do painel.
+
+Identidade visual:
+- Não foram alteradas a paleta institucional, a marca, tipografia, imagens, conteúdo, estrutura, produtos ou fluxos.
+- Não foram alteradas regras de negócio, banco de dados, autenticação ou integrações.
+
+Validação realizada:
+- Conferida a presença de theme-global.css e theme-global.js nas páginas HTML ativas.
+- Conferido o título da página inicial e metadado Open Graph.
+- Conferidos os seletores corrigidos no CSS global.
+- Não foi possível executar teste visual interativo em navegador nesta etapa; após publicar, validar modo claro/escuro no catálogo e nas telas do portal em desktop e celular.
+
+Publicação:
+1. Faça backup do deploy atual no Netlify.
+2. Publique a pasta extraída completa, preservando portal-config.js e os demais arquivos.
+3. Atualize com Ctrl+F5 no desktop e limpe o cache do navegador no celular.

@@ -1,0 +1,15 @@
+AJUSTE COMPLEMENTAR — CONTRASTE DOS CARTÕES NO MODO ESCURO
+
+Problema:
+A regra de estilo da seção "Do catálogo até suas mãos" fixava h3, p e span em preto com !important. Isso mantinha os títulos pretos no tema escuro.
+
+Correção:
+- Tema claro: cartões creme, títulos escuros e descrições cinza, preservando o visual anterior.
+- Tema escuro: cartões usam a superfície escura do tema; títulos usam --theme-fg e descrições --theme-muted.
+- Marcadores 01/02/03 mantêm fundo verde-limão e texto escuro para contraste.
+
+Escopo:
+Somente estilos da seção "Do catálogo até suas mãos". Sem alteração de conteúdo, estrutura, marca, paleta institucional, funcionalidades ou backend.
+
+Validação:
+Conferido o bloco CSS e a presença das regras específicas para [data-theme="dark"]. É necessário validar visualmente após deploy nos dois temas.

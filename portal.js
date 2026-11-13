@@ -7,7 +7,20 @@ const date = d => {
  const parsed=/^\d{4}-\d{2}-\d{2}$/.test(raw)?new Date(raw+'T12:00:00'):new Date(raw);
  return Number.isNaN(parsed.getTime())?'—':parsed.toLocaleDateString('pt-BR');
 };
-const BUILD='2026-11-11v10';let toastTimer=null;
+const isoToBR = value => /^\d{4}-\d{2}-\d{2}$/.test(String(value||'')) ? `${value.slice(8,10)}/${value.slice(5,7)}/${value.slice(0,4)}` : '';
+const brToISO = value => {
+ const match=String(value||'').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+ if(!match)return null;
+ const day=Number(match[1]),month=Number(match[2]),year=Number(match[3]);
+ const check=new Date(year,month-1,day);
+ if(check.getFullYear()!==year||check.getMonth()!==month-1||check.getDate()!==day)return null;
+ return `${match[3]}-${match[2]}-${match[1]}`;
+};
+const maskBRDateInput = input => {
+ const digits=input.value.replace(/\D/g,'').slice(0,8);
+ input.value=digits.length>4?`${digits.slice(0,2)}/${digits.slice(2,4)}/${digits.slice(4)}`:digits.length>2?`${digits.slice(0,2)}/${digits.slice(2)}`:digits;
+};
+const BUILD='2.2';let toastTimer=null;
 const friendlyError = raw => {
  const msg=String(raw?.message||raw||'').trim();
  const lower=msg.toLowerCase();
@@ -74,7 +87,7 @@ const navItems = {
 };
 const labels={admin:'Administrador',collaborator:'Colaborador',reseller:'Revendedor',customer:'Cliente'};
 function showLogin(msg=''){ appShownKey=null; $('#loginView').classList.remove('hidden');$('#appView').classList.add('hidden');$('#loginForm').classList.remove('hidden');$('#resetPasswordBox')?.classList.add('hidden');$('#loginMsg').textContent=msg; }
-function showApp(){ appShownKey=(profile?.id||'')+':'+(profile?.role||''); $('#loginView').classList.add('hidden');$('#appView').classList.remove('hidden');$('#userInfo').innerHTML=`<b>${escapeHtml(profile.full_name||profile.email||'Usuário')}</b><br>${escapeHtml(profile.email||'')}<br><span class="pill">${labels[profile.role]||profile.role}</span>`;$('#rolePill').textContent=labels[profile.role]||profile.role;$('#userInfo').insertAdjacentHTML('beforeend','<br><small style="opacity:.55">versão '+BUILD+'</small>');renderNav();let saved='dashboard';try{saved=sessionStorage.getItem('dopamina3d:lastTab:'+profile.id)||'dashboard';}catch(e){}loadTab(saved,true);}
+function showApp(){ appShownKey=(profile?.id||'')+':'+(profile?.role||''); $('#loginView').classList.add('hidden');$('#appView').classList.remove('hidden');$('#userInfo').innerHTML=`<b>${escapeHtml(profile.full_name||profile.email||'Usuário')}</b><br>${escapeHtml(profile.email||'')}<br><span class="pill">${labels[profile.role]||profile.role}</span>`;$('#rolePill').textContent=labels[profile.role]||profile.role;$('#userInfo').insertAdjacentHTML('beforeend','<br><small style="opacity:.55">Versão '+BUILD+'</small>');renderNav();let saved='dashboard';try{saved=sessionStorage.getItem('dopamina3d:lastTab:'+profile.id)||'dashboard';}catch(e){}loadTab(saved,true);}
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function saveIconButton(label='Salvar'){
  return `<button type="submit" class="icon-save-btn" aria-label="${escapeHtml(label)}" title="${escapeHtml(label)}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h12l4 4v14H3V3h2Z"/><path d="M7 3v6h10V3M7 21v-7h10v7M9 17h6"/></svg></button>`;
@@ -509,9 +522,20 @@ async function finance(){
  const max=Math.max(1,...months.flatMap(m=>[m.income,m.expense]));
  const chart=`<div class="card section"><div class="row between"><div><h2>Movimentação dos últimos 6 meses</h2><span class="muted">Comparativo mensal de receitas e despesas</span></div><div class="row"><span class="status ok">● Receitas</span><span class="status bad">● Despesas</span></div></div><div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;align-items:end;height:210px;padding:18px 4px 0">${months.map(m=>`<div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:7px"><div style="height:155px;width:100%;display:flex;align-items:flex-end;justify-content:center;gap:5px;border-bottom:1px solid var(--line)"><div title="Receitas: ${money(m.income)}" style="height:${Math.max(m.income?3:0,m.income/max*145)}px;width:min(34%,30px);background:#16834a;border-radius:5px 5px 0 0"></div><div title="Despesas: ${money(m.expense)}" style="height:${Math.max(m.expense?3:0,m.expense/max*145)}px;width:min(34%,30px);background:#bd3434;border-radius:5px 5px 0 0"></div></div><small class="muted">${escapeHtml(m.label)}</small></div>`).join('')}</div><div class="muted" style="font-size:11px">Valores em R$. Passe o cursor sobre as barras para consultar os valores.</div></div>`;
  const rows=data.map(x=>`<tr data-finance-row="${x.id}"><td>${date(x.date)}</td><td><span class="status ${x.type==='income'?'ok':'bad'}">${x.type==='income'?'Receita':'Despesa'}</span></td><td>${escapeHtml(x.category||'—')}</td><td>${escapeHtml(x.description)}</td><td>${money(x.amount)}</td><td>${x.attachment_path?`<div class="finance-file-actions"><button type="button" class="btn secondary finance-open-btn" data-file="${escapeHtml(x.attachment_path)}" aria-label="Comprovante" title="Comprovante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7M10 14 21 3M19 13v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h7"/></svg><span>Abrir</span></button>${deleteIconButton(`data-remove-file="${x.id}"`,'Excluir anexo')}</div>`:'—'}</td><td><div class="finance-row-actions"><button class="btn secondary" data-tx="${x.id}">Editar</button>${deleteIconButton(`data-delete-tx="${x.id}"`,'Excluir lançamento')}</div></td></tr>`).join('');
- $('#content').innerHTML=`<div class="grid">${metric('Receitas registradas',money(inc),'Total do período carregado')}${metric('Despesas registradas',money(out),'Total do período carregado')}${metric('Saldo',money(inc-out),'Receitas menos despesas')}${metric('Lançamentos',data.length,'Receitas e despesas')}</div>${chart}<div class="section card"><div class="row between"><div><h2>Lançamentos financeiros</h2><span class="muted">Registre entradas, saídas, datas, observações e comprovantes.</span></div><div class="actions"><button class="btn secondary" id="exportFinance">Exportar CSV</button><button class="btn" id="addTx">+ Novo lançamento</button></div></div><div class="row" style="margin:14px 0"><label class="field">De <input id="financeFrom" type="date" value="${window.financeFrom||''}"></label><label class="field">Até <input id="financeTo" type="date" value="${window.financeTo||''}"></label><button class="btn secondary" id="clearFinanceFilter">Limpar período</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Comprovante</th><th>Ações</th></tr></thead><tbody>${rows||'<tr><td colspan="7" class="empty">Nenhum lançamento encontrado.</td></tr>'}</tbody></table></div></div><div id="txForm" class="card section hidden"></div>`;
+ $('#content').innerHTML=`<div class="grid">${metric('Receitas registradas',money(inc),'Total do período carregado')}${metric('Despesas registradas',money(out),'Total do período carregado')}${metric('Saldo',money(inc-out),'Receitas menos despesas')}${metric('Lançamentos',data.length,'Receitas e despesas')}</div>${chart}<div class="section card"><div class="row between"><div><h2>Lançamentos financeiros</h2><span class="muted">Registre entradas, saídas, datas, observações e comprovantes.</span></div><div class="actions"><button class="btn secondary" id="exportFinance">Exportar CSV</button><button class="btn" id="addTx">+ Novo lançamento</button></div></div><div class="row" style="margin:14px 0"><label class="field">De <input id="financeFrom" type="text" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data inicial, dia mês e ano" value="${isoToBR(window.financeFrom)}"></label><label class="field">Até <input id="financeTo" type="text" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="DD/MM/AAAA" aria-label="Data final, dia mês e ano" value="${isoToBR(window.financeTo)}"></label><button class="btn secondary" id="clearFinanceFilter">Limpar período</button></div><div class="table-wrap"><table class="table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Comprovante</th><th>Ações</th></tr></thead><tbody>${rows||'<tr><td colspan="7" class="empty">Nenhum lançamento encontrado.</td></tr>'}</tbody></table></div></div><div id="txForm" class="card section hidden"></div>`;
  $('#addTx').onclick=()=>{editTx();requestAnimationFrame(()=>$('#txForm')?.scrollIntoView({behavior:'smooth',block:'center'}));};
- $('#financeFrom').onchange=e=>{window.financeFrom=e.target.value;finance();};$('#financeTo').onchange=e=>{window.financeTo=e.target.value;finance();};$('#clearFinanceFilter').onclick=()=>{window.financeFrom='';window.financeTo='';finance();};
+ ['financeFrom','financeTo'].forEach(id=>{
+  const input=$('#'+id);
+  input.addEventListener('input',()=>maskBRDateInput(input));
+  input.addEventListener('change',()=>{
+   const raw=input.value.trim();
+   const parsed=raw?brToISO(raw):'';
+   if(raw&&!parsed){toast('Data inválida. Digite no formato DD/MM/AAAA, por exemplo 13/11/2026.');input.value=isoToBR(window[id]||'');return;}
+   window[id]=parsed||'';
+   finance();
+  });
+ });
+ $('#clearFinanceFilter').onclick=()=>{window.financeFrom='';window.financeTo='';finance();};
  $('#exportFinance').onclick=()=>{const cols=['Data','Tipo','Categoria','Descrição','Valor'];const csv=[cols,...data.map(x=>[x.date,x.type==='income'?'Receita':'Despesa',x.category||'',x.description,Number(x.amount).toFixed(2)])].map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='dopamina3d-financeiro.csv';a.click();URL.revokeObjectURL(url);};
  $('#content').querySelectorAll('[data-tx]').forEach(b=>b.onclick=()=>{
   const tx=data.find(x=>x.id===b.dataset.tx),row=b.closest('tr');
